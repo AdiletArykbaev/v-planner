@@ -1,35 +1,40 @@
-import { useForm } from "react-hook-form"
-import { useContext } from "react"
-import { yupResolver } from "@hookform/resolvers/yup"
-import { schemaVendorSignIn } from "../../../validation/schemas"
-import f from "../../../validation/fieldName"
-import Input from "../../UI/Input"
-import Button from "../../UI/Button"
-import { ModalContext } from "../../../context/ModalContext"
-import { AuthContext } from "../../../context/AuthContext"
+import { useForm } from "react-hook-form";
+import { useContext } from "react";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { schemaVendorSignIn } from "../../../validation/schemas";
+import f from "../../../validation/fieldName";
+import Input from "../../UI/Input";
+import Button from "../../UI/Button";
+import { ModalContext } from "../../../context/ModalContext";
+import { AuthContext } from "../../../context/AuthContext";
+import { useDispatch } from "react-redux";
+import { loginVendorAction } from "../../../Store/Actions/VendorLogin.js";
 
 const VendorSignInForm = () => {
-
-
-  const auth = useContext(AuthContext)
-  const modal = useContext(ModalContext)
-
+  const auth = useContext(AuthContext);
+  const modal = useContext(ModalContext);
+  const dispatch = useDispatch();
   const {
     register,
     formState: { errors, isValid },
-    handleSubmit
+    handleSubmit,
   } = useForm({
     mode: "all",
-    resolver: yupResolver(schemaVendorSignIn())
-  })
+    resolver: yupResolver(schemaVendorSignIn()),
+  });
 
-  const signIn = data => {
-    auth.login(data[f.email], data[f.password], process.env.REACT_APP_ROLE_VENDOR)
-    modal.destroy()
-  }
+  const signIn = (data) => {
+    dispatch(loginVendorAction(data.email, data.password));
+    auth.login(
+      data[f.email],
+      data[f.password],
+      process.env.REACT_APP_ROLE_VENDOR
+    );
+    modal.destroy();
+  };
 
-  const isValidField = field => !errors[field]
-  const getErrorField = field => errors[field]?.message
+  const isValidField = (field) => !errors[field];
+  const getErrorField = (field) => errors[field]?.message;
 
   return (
     <form onSubmit={handleSubmit(signIn)}>
@@ -50,9 +55,11 @@ const VendorSignInForm = () => {
       <Button
         className="btn btn-accent m-t-24 d-block w-100"
         disabled={!isValid}
-      >Sign In</Button>
+      >
+        Sign In
+      </Button>
     </form>
-  )
-}
+  );
+};
 
-export default VendorSignInForm
+export default VendorSignInForm;

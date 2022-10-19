@@ -52,17 +52,22 @@ const UserSignInForm = () => {
               budget,
               token*/
     if (token.length > 10) {
-      console.log("userData", userData);
       auth.login(
         process.env.REACT_APP_ROLE_USER,
         userData.mail,
         userData.firstName,
         userData.surname,
-
-        "avata  r",
         userData.phone,
+        userData.image,
         userData.nickname,
-        userData.partnersFirstName
+        userData.partnersFirstName,
+        userData.partnersFirstName,
+        userData.engagementDate,
+        userData.weddingDate,
+        userData.engagementPlace,
+        userData.countOfGuest,
+        userData.budget,
+        token
       );
     }
   }, [token]);

@@ -1,27 +1,47 @@
 import {
-  LOGIN_USER,
-  LOGIN_SUCCESS,
-  LOGIN_FAILED,
-  SIGNIN_SUCCESS,
-  SIGNIN_USER,
-  SIGNIN_FAILED,
+  LOGIN_VENDOR,
+  VENDOR_SUCCESS,
+  VENDOR_FAILED,
+  VENDOR_SIGNIN,
+  VENDOR_SIGNIN_SUCCESS,
+  VENDOR_SIGNIN_FAILED,
 } from "../types";
 
 const initialState = {
   loading: false,
-  userData: "",
+  vendorData: "",
   token: "твой токен",
   error: null,
 };
 
-export default function userReducer(state = initialState, action) {
+export default function VendorReducer(state = initialState, action) {
   switch (action.type) {
-    case LOGIN_USER:
+    case LOGIN_VENDOR:
       return {
         ...state,
         loading: true,
       };
-    case LOGIN_SUCCESS:
+    case VENDOR_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        vendorData: action.payload?.data,
+
+        token: action.payload?.token,
+      };
+    case VENDOR_FAILED:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload.error,
+      };
+    case VENDOR_SIGNIN:
+      return {
+        ...state,
+        loading: true,
+      };
+    case VENDOR_SIGNIN_SUCCESS:
       return {
         ...state,
         loading: false,
@@ -30,33 +50,12 @@ export default function userReducer(state = initialState, action) {
 
         token: action.payload?.token,
       };
-    case LOGIN_FAILED:
+    case VENDOR_SIGNIN_FAILED:
       return {
         ...state,
         loading: false,
         error: action.payload.error,
       };
-    case SIGNIN_USER:
-      return {
-        ...state,
-        loading: true,
-      };
-    case SIGNIN_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-        error: null,
-        userData: action.payload?.data,
-
-        token: action.payload?.token,
-      };
-    case SIGNIN_FAILED:
-      return {
-        ...state,
-        loading: false,
-        error: action.payload.error,
-      };
-
     default:
       return state;
   }

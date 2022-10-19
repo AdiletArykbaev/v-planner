@@ -10,8 +10,9 @@ import LogoutModal from "../Modals/LogoutModal";
 import Logo from "../UI/Logo";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
+import axios from "axios";
 
-const CabinetHeader = () => {
+const CabinetHeader = ({ name, image }) => {
   const [menuActive, setMenuActive] = useState(false);
   const [notifyActive, setNotifyActive] = useState(false);
   const auth = useContext(AuthContext);
@@ -26,12 +27,8 @@ const CabinetHeader = () => {
   const { token } = useSelector((state) => state.userInfo);
   const state = useSelector((state) => state.userInfo);
 
-  useEffect(() => {
-    console.log("token", token);
-    console.log("state in layout", state);
-  }, [token]);
   const { userInfo } = useSelector((state) => state);
-  console.log("User Info ", userInfo);
+
   return (
     <header className="header header-shadow">
       <div className="container">
@@ -48,12 +45,10 @@ const CabinetHeader = () => {
                 sidebar.destroy();
               }}
             >
-              <div className="nav-header__text">
-                Hi, {userInfo.userData.firstName}!
-              </div>
+              <div className="nav-header__text">Hi, {name}!</div>
               <div className="nav-header__icon border">
                 {auth.user.profile.avatar ? (
-                  <img src={auth.user.profile.avatar} alt="Avatar" />
+                  <img src={`http://localhost:7000/${image}`} alt="Avatar" />
                 ) : (
                   <i className="icon-camera"></i>
                 )}

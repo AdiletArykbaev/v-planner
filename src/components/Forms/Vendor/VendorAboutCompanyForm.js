@@ -36,10 +36,10 @@ const VendorAboutCompanyForm = ({ onCallback, onBack }) => {
     setSrc(null)
     setSrcType(null)
   }
-
+console.log("data in form ",f)
   const isValidField = field => !errors[field]
   const getErrorField = field => errors[field]?.message
-
+ 
   return (
     <form onSubmit={handleSubmit(onCallback)}>
       <label className="file-upload">

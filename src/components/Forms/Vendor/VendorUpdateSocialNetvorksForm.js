@@ -1,46 +1,56 @@
-import { useForm } from "react-hook-form"
-import f from "../../../validation/fieldName"
-import Button from "../../UI/Button"
-import Input from "../../UI/Input"
-import { yupResolver } from "@hookform/resolvers/yup"
-import { schemaVendorUpdateSocialNetvorks } from "../../../validation/schemas"
-import { useContext } from "react"
-import { AuthContext } from "../../../context/AuthContext"
+import { useForm } from "react-hook-form";
+import f from "../../../validation/fieldName";
+import Button from "../../UI/Button";
+import Input from "../../UI/Input";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { schemaVendorUpdateSocialNetvorks } from "../../../validation/schemas";
+import { useContext } from "react";
+import { AuthContext } from "../../../context/AuthContext";
 
-const VendorUpdateSocialNetvorksForm = () => {
-
+const VendorUpdateSocialNetvorksForm = ({
+  instagram,
+  facebook,
+  youtube,
+  twitter,
+}) => {
   const {
     register,
     formState: { errors, isValid },
-    handleSubmit
+    handleSubmit,
   } = useForm({
     mode: "all",
-    resolver: yupResolver(schemaVendorUpdateSocialNetvorks())
-  })
+    resolver: yupResolver(schemaVendorUpdateSocialNetvorks()),
+  });
 
-  const auth = useContext(AuthContext)
-  
-  const isValidField = field => !errors[field]
-  const getErrorField = field => errors[field]?.message
-  
-  const onSubmit = data => {
+  const auth = useContext(AuthContext);
+
+  const isValidField = (field) => !errors[field];
+  const getErrorField = (field) => errors[field]?.message;
+
+  const onSubmit = (data) => {
     auth.setUser({
       ...auth.user,
       profile: {
         ...auth.user.profile,
         blocks: {
           ...auth.user.profile.blocks,
-          networks: !!Object.keys(data).filter(i => data[i].length).filter(Boolean).length
-        }
+          networks: !!Object.keys(data)
+            .filter((i) => data[i].length)
+            .filter(Boolean).length,
+        },
       },
       networks: {
         ...data,
-      }
-    })
-  }
+      },
+    });
+  };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="social-form" data-to="social_networks">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="social-form"
+      data-to="social_networks"
+    >
       <h4>Social Networks</h4>
       <div className="social-form__list m-t-24">
         <div className="social-form__item">
@@ -54,7 +64,7 @@ const VendorUpdateSocialNetvorksForm = () => {
             <Input
               type="text"
               placeholder="Link"
-              defaultValue={auth.user.networks.facebook}
+              defaultValue={facebook}
               register={register(f.social.facebook)}
               error={getErrorField(f.social.facebook)}
               isValid={isValidField(f.social.facebook)}
@@ -72,7 +82,7 @@ const VendorUpdateSocialNetvorksForm = () => {
             <Input
               type="text"
               placeholder="Link"
-              defaultValue={auth.user.networks.instagram}
+              defaultValue={instagram}
               register={register(f.social.instagram)}
               error={getErrorField(f.social.instagram)}
               isValid={isValidField(f.social.instagram)}
@@ -90,7 +100,7 @@ const VendorUpdateSocialNetvorksForm = () => {
             <Input
               type="text"
               placeholder="Link"
-              defaultValue={auth.user.networks.youtube}
+              defaultValue={youtube}
               register={register(f.social.youtube)}
               error={getErrorField(f.social.youtube)}
               isValid={isValidField(f.social.youtube)}
@@ -108,7 +118,7 @@ const VendorUpdateSocialNetvorksForm = () => {
             <Input
               type="text"
               placeholder="Link"
-              defaultValue={auth.user.networks.twitter}
+              defaultValue={twitter}
               register={register(f.social.twitter)}
               error={getErrorField(f.social.twitter)}
               isValid={isValidField(f.social.twitter)}
@@ -134,12 +144,11 @@ const VendorUpdateSocialNetvorksForm = () => {
           </div>
         </div>
       </div>
-      <Button
-        className="btn btn-accent m-t-16"
-        disabled={!isValid}
-      >Save</Button>
+      <Button className="btn btn-accent m-t-16" disabled={!isValid}>
+        Save
+      </Button>
     </form>
-  )
-}
+  );
+};
 
-export default VendorUpdateSocialNetvorksForm
+export default VendorUpdateSocialNetvorksForm;

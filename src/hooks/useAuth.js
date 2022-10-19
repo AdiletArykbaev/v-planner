@@ -26,7 +26,6 @@ const useAuth = () => {
     token
   ) => {
     try {
-      console.log("data in hook", email);
       const response =
         role === process.env.REACT_APP_ROLE_USER
           ? await UserService.login(
