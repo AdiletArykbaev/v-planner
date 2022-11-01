@@ -10,29 +10,29 @@ import Rules from "../pages/Rules";
 import Matchlist from "../pages/Matchlist";
 import Faq from "../pages/Faq";
 import UserQuotes from "../pages/Quotes/UserQuotes";
-import { useContext } from "react";
+import {useContext, useEffect} from "react";
 import { AuthContext } from "../context/AuthContext";
 import UserOrders from "../pages/Orders/UserOrders";
 import VendorList from "../pages/VendorList";
 import VendorItem from "../pages/VendorItem";
 import UserChat from "../pages/Chat/UserChat";
-import { useSelector, useDispatch } from "react-redux";
 import { connect } from "react-redux";
+import {getAllVendorsAction} from "../Store/Actions/GetAllVendors";
 function UserRouter(props) {
   const auth = useContext(AuthContext);
-  const { userData } = useSelector((state) => state.userInfo);
-
+  const url = props.userDto.clientModel?.photoModel?.name
+  props.getAll()
   return (
     <Routes>
       <Route
         path="/"
         element={
-          <CabinetLayout name={userData.firstName} image={userData.image} />
+          <CabinetLayout name={props.userDto.firstName} image={url} />
         }
       >
         <Route path="/" element={<MainPageLayout />}>
           <Route path="/" element={<Navigate to="/matchlist" />} />
-          <Route path="/matchlist" element={<Matchlist dto={props.dto} />} />
+          <Route path="/matchlist" element={props.loading ?   <div>Loading....</div>:<Matchlist />}/>}
           {Object.keys(auth.user.profile.likes.users).length >= 10 && (
             <>
               <Route path="/quotes" element={<UserQuotes />} />
@@ -61,9 +61,17 @@ function UserRouter(props) {
 }
 const mapStateToProps = function (state) {
   return {
-    dto: state.matchList.allVendors,
+    userDto:state.userInfo.userData,
+    token:state.userInfo.token,
+    loading:state.matchList.loading
+
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getAll: () => dispatch(getAllVendorsAction()),
+
   };
 };
 
-
-export default connect(mapStateToProps)(UserRouter);
+export default connect(mapStateToProps,mapDispatchToProps)(UserRouter);

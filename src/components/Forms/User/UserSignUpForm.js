@@ -86,7 +86,7 @@ const UserSignUpForm = () => {
 
   const [src, setSrc] = useState(null);
   const [isCustomBudget, setIsCustomBudget] = useState(false);
-  const { token } = useSelector((state) => state.userInfo);
+  let { token } = useSelector((state) => state.userInfo);
 
   const addPhoto = (e) => {
     if (e.target.files && e.target.files.length) {
@@ -108,7 +108,7 @@ const UserSignUpForm = () => {
     dispatch(signUpAction({ ...data }));
     auth.login(
       process.env.REACT_APP_ROLE_USER,
-      userData.mail,
+      userData.email,
       userData.firstName,
       userData.surname,
 
@@ -123,20 +123,6 @@ const UserSignUpForm = () => {
   const isValidField = (field) => !errors[field];
   const getErrorField = (field) => errors[field]?.message;
   useEffect(() => {
-    /*email,
-              firstName,
-              lastName,
-              phone,
-              avatar,
-              nickname,
-              partnersFirstName,
-              partnersLastName,
-              engagementDate,
-              weddingDate,
-              location,
-              countGuest,
-              budget,
-              token*/
 
     if (token.length > 10) {
       console.log("token in useEffect", token);

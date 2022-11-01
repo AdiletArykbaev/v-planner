@@ -1,4 +1,4 @@
-import {
+    import {
   LOGIN_USER,
   LOGIN_SUCCESS,
   LOGIN_FAILED,
@@ -15,6 +15,7 @@ const initialState = {
 };
 
 export default function userReducer(state = initialState, action) {
+
   switch (action.type) {
     case LOGIN_USER:
       return {

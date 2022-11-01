@@ -14,8 +14,6 @@ import { ThemeContext } from "./context/ThemeContext";
 import useTheme from "./hooks/useTheme";
 import ScrollToTop from "./components/SrcollToTop";
 import { connect } from "react-redux";
-import { getAllVendorsAction } from "./Store/Actions/GetAllVendors.js";
-
 const App = (props) => {
   const modal = useModal();
   const auth = useAuth();
@@ -29,7 +27,6 @@ const App = (props) => {
     if (localStorage.getItem("token")) {
       auth.check();
     }
-    props.getAll();
   }, []);
 
   if (auth.isLoading) {
@@ -54,9 +51,5 @@ const App = (props) => {
     </AuthContext.Provider>
   );
 };
-const mapDispatchToProps = (dispatch) => {
-  return {
-    getAll: () => dispatch(getAllVendorsAction()),
-  };
-};
-export default connect(null, mapDispatchToProps)(App);
+
+export default App;
