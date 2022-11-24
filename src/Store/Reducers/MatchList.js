@@ -12,7 +12,7 @@ const initialState = {
   allVendors: {
     result:[
       {
-        id: 1,
+        id: 8 ,
         title: "data is changed ",
         price: "1$-3000$",
         description:
@@ -20,7 +20,7 @@ const initialState = {
         services: ["Wedding Bakary", "Wedding Cakes"],
         about:
             "When couples start thinking about their wedding plans, one of the details that typically first comes to mind is their wedding cake.",
-        files: [
+        photos: [
           "https://st.depositphotos.com/2044631/2014/i/600/depositphotos_20146623-stock-photo-tigers-face.jpg",
           "https://klike.net/uploads/posts/2019-05/medium/1559021804_2.jpg",
           "https://klike.net/uploads/posts/2019-06/1560838551_1.jpg",
@@ -29,7 +29,7 @@ const initialState = {
         ],
       },
       {
-        id: 2,
+        id: 9,
         title: "Wedding Cakes 2",
         price: "2$-3000$",
         description:
@@ -37,14 +37,14 @@ const initialState = {
         services: ["Wedding Bakary", "Wedding Cakes"],
         about:
             "When couples start thinking about their wedding plans, one of the details that typically first comes to mind is their wedding cake.",
-        files: [
+        photos: [
           "https://st.depositphotos.com/2044631/2014/i/600/depositphotos_20146623-stock-photo-tigers-face.jpg",
           "https://storge.pic2.me/cm/2560x1920/147/54a996a7bb68e.jpg",
           "http://co15.nevseoboi.com.ua/animal/230/23044/1481357993-161004558-animal-nevseoboi.com.ua.jpg",
         ],
       },
       {
-        id: 3,
+        id: 10,
         title: "Wedding Cakes 3",
         price: "3$-3000$",
         description:
@@ -52,7 +52,7 @@ const initialState = {
         services: ["Wedding Bakary", "Wedding Cakes"],
         about:
             "When couples start thinking about their wedding plans, one of the details that typically first comes to mind is their wedding cake.",
-        files: [
+        photos: [
           "https://funart.pro/uploads/posts/2021-03/1617048969_52-p-oboi-krasivie-peizazhi-prirodi-56.jpg",
           "https://images.prom.ua/1928657107_w640_h640_fotooboi-flizelinovye-3d.jpg",
           "https://klike.net/uploads/posts/2020-09/1600242017_1.jpg",
@@ -60,7 +60,7 @@ const initialState = {
         ],
       },
       {
-        id: 4,
+        id: 11,
         title: "Wedding Cakes 4",
         price: "4$-3000$",
         description:

@@ -15,12 +15,13 @@ import Reports from "../pages/Reports";
 import Rules from "../pages/Rules";
 import VendorChat from "../pages/Chat/VendorChat";
 import f from "../validation/fieldName";
-import { useSelector } from "react-redux";
+import {connect} from "react-redux";
 
-export default function VendorRouter() {
+ function VendorRouter({vendorData}) {
   console.log("data in forms in prive", f);
-  const { vendorData } = useSelector((state) => state.vendorInfo);
-
+     // console.log("photos",vendorData.vendorModel.photos[0].name)
+    //vendorData.vendorModel.photos[0].name
+     console.log("vendor Data",vendorData)
   return (
     <Routes>
       <Route
@@ -28,7 +29,7 @@ export default function VendorRouter() {
         element={
           <CabinetLayout
             name={vendorData.firstName}
-            image={vendorData.avatar}
+            image={vendorData.vendorModel.photos[0].name}
           />
         }
       >
@@ -56,3 +57,10 @@ export default function VendorRouter() {
     </Routes>
   );
 }
+const mapStateToProps = function (state) {
+  return {
+    vendorData:state.vendorInfo.vendorData,
+
+  };
+};
+export default  connect(mapStateToProps)(VendorRouter);

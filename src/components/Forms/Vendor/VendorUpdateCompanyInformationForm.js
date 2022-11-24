@@ -135,7 +135,7 @@ const VendorUpdateCompanyInformationForm = ({ img, name, amount, country }) => {
           {(src || auth.user.company.logo) && (
             <img
               className="photo-upload__img"
-              src={src || `http://localhost:7000/${img}`}
+              src={src || `https://images-and-videos.fra1.digitaloceanspaces.com/images/${img}`}
               alt=""
             />
           )}

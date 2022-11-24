@@ -415,6 +415,8 @@ const marks = [{ value: 0 }, { value: 50 }, { value: 100 }];
   const triggerStories = () => {
     setTriggerStoriesSlide(!triggerStoriesSlide);
   };
+  const [story,setStory] = useState("")
+  console.log("all vendors",dto)
 
   return (
       <>
@@ -519,10 +521,13 @@ const marks = [{ value: 0 }, { value: 50 }, { value: 100 }];
             <Stories
                 onCallback={(story) => {
                   console.log("stroyDto", ...storiesData);
+                  console.log("idshki",story.id)
+                  setData(...dto.result.filter((item) => story.id === item.id));
                   console.log("data after changing", dto);
 
-                  setData(...dto.result.filter((item) => story.id === item.id));
                 }}
+                // dto={
+                // }
                 triggerStories={triggerStoriesSlide}
             />
           </div>

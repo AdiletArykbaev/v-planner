@@ -70,7 +70,6 @@ const mapStateToProps = function (state) {
 const mapDispatchToProps = (dispatch) => {
   return {
     getAll: () => dispatch(getAllVendorsAction()),
-
   };
 };
 

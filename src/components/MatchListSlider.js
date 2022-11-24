@@ -14,7 +14,7 @@ const MatchListSlider = ({ files = [], vendorId, triggerStories, data }) => {
   const {token} = useSelector(state=>state.userInfo)
   const prevRef = useRef(null);
   const nextRef = useRef(null);
-
+  console.log("props in slider",files,data)
   const auth = useContext(AuthContext);
 
   useEffect(() => {
@@ -41,8 +41,8 @@ const MatchListSlider = ({ files = [], vendorId, triggerStories, data }) => {
     });
     axios({
       method: "put",
-      url: "http://147.182.224.144:8080/matches/liked-or-not/true",
-      headers: { "Content-Type": "multipart/form-data","Access-Control-Allow-Origin":"*",Authorization:`Bearer ${token}`,vendorId:vendorId},
+      url: `http://147.182.224.144:8080/matches/liked-or-not?vendorId=${vendorId}&status=true`,
+      headers: { "Content-Type": "multipart/form-data","Access-Control-Allow-Origin":"*",Authorization:`Bearer ${token}`},
     }).then((res) => {
       console.log("response in vendor like",res)
     })
@@ -56,6 +56,16 @@ const MatchListSlider = ({ files = [], vendorId, triggerStories, data }) => {
     const user = auth.user;
     delete auth.user.profile.likes.users[vendorId];
     auth.setUser({ ...user });
+    axios({
+      method: "put",
+      url: `http://147.182.224.144:8080/matches/liked-or-not?vendorId=${vendorId}&status=false`,
+      headers: { "Content-Type": "multipart/form-data","Access-Control-Allow-Origin":"*",Authorization:`Bearer ${token}`},
+    }).then((res) => {
+      console.log("response in vendor dis",res)
+    })
+        .catch((err) => {
+          console.log(err)
+        })
     triggerStories();
   };
 

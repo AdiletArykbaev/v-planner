@@ -7,11 +7,10 @@ import VendorUpdatePhotoAndVideoForm from "../../components/Forms/Vendor/VendorU
 import VendorUpdateServiceDetailsForm from "../../components/Forms/Vendor/VendorUpdateServiceDetailsForm";
 import VendorUpdateSocialNetvorksForm from "../../components/Forms/Vendor/VendorUpdateSocialNetvorksForm";
 import Security from "../../components/Security";
-import { useSelector } from "react-redux";
+import {connect, useSelector} from "react-redux";
 
-export default function VendorAccount() {
+ function VendorAccount({vendorData}) {
   const { id } = useParams();
-  const { vendorData } = useSelector((state) => state.vendorInfo);
   console.log(vendorData);
   useEffect(() => {
     const selector = document.querySelector(`[data-to="${id}"]`);
@@ -30,14 +29,14 @@ export default function VendorAccount() {
       <VendorUpdatePersonalInfarmationForm
         name={vendorData.firstName}
         surname={vendorData.surname}
-        mail={vendorData.mail}
-        img={vendorData.avatar}
+        mail={vendorData.email}
+        img={vendorData.vendorModel.photos[0].name}
         phone={vendorData.phoneNumber}
       />
       <VendorUpdateCompanyInformationForm
-        name={vendorData.companyName}
-        amount={vendorData.yearsOnMarket}
-        img={vendorData.companyAvatar}
+        name={vendorData.vendorModel.companyName}
+            amount={vendorData.vendorModel.companyName}
+        img={vendorData.vendorModel.photos[1].name}
         country={vendorData.city}
       />
       <VendorUpdateServiceDetailsForm />
@@ -59,3 +58,10 @@ export default function VendorAccount() {
     </section>
   );
 }
+const mapStateToProps = function (state) {
+    return {
+        vendorData:state.vendorInfo.vendorData,
+
+    };
+};
+export default  connect(mapStateToProps)(VendorAccount);

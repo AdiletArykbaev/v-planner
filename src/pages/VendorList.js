@@ -1,8 +1,11 @@
-import { useState } from "react"
+import {useEffect, useState} from "react"
 import { useNavigate } from "react-router-dom"
+import {connect} from "react-redux";
+import {getLikedVendors} from "../Store/Actions/getLikedVendors";
 
-export default function VendorList() {
 
+function VendorList({getLiked,vendorsProps}) {
+  console.log("vendors",vendorsProps)
   const [vendors, setVendors] = useState([
     {id: 1, src: "/assets/images/vendor-poster.jpg", title: "Wedding Cakes", price: "2000-3000$", text: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit..."},
     {id: 2, src: "/assets/images/vendor-poster.jpg", title: "Wedding Cakes", price: "2000-3000$", text: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit..."},
@@ -19,17 +22,20 @@ export default function VendorList() {
   ])
 
   const navigate = useNavigate()
-
+  useEffect(()=>{
+  getLiked()
+  },[])
   return (
     <section className="vendors">
       <h3>My Vendors</h3>
       <div className="vendors__content">
         <div className="vendors__list">
           {
-            vendors.map(vendor => (
+            vendorsProps.map(vendor => (
               <div className="vendors__item item-vendor" key={vendor.id}>
                 <div className="item-vendor__header" onClick={() => navigate(`/vendor/${vendor.id}`)}>
-                  <img className="item-vendor__img" src={ vendor.src } alt="" />
+                  <img  src={`https://images-and-videos.fra1.digitaloceanspaces.com/images/${vendor.photos[1].name}`} alt="Avatar" />
+
                   <div className="item-vendor__actions">
                     <div className="item-vendor__like" onClick={e => e.stopPropagation()}><i className="icon-like"></i></div>
                     <div
@@ -42,9 +48,9 @@ export default function VendorList() {
                   </div>
                 </div>
                 <div className="item-vendor__body">
-                  <h4 className="item-vendor__title" onClick={() => navigate(`/vendor/${vendor.id}`)}>{ vendor.title }</h4>
-                  <div className="item-vendor__price">{ vendor.price }</div>
-                  <div className="item-vendor__text">{ vendor.text }</div>
+                  <h4 className="item-vendor__title" onClick={() => navigate(`/vendor/${vendor.id}`)}>{ vendor.companyTitle }</h4>
+                  <div className="item-vendor__price">{ vendor.weddingActivity }</div>
+                  <div className="item-vendor__text">{ vendor.companyDescription }</div>
                 </div>
               </div>
             ))
@@ -54,3 +60,16 @@ export default function VendorList() {
     </section>  
   )
 }
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getLiked: ()=> dispatch(getLikedVendors())
+  };
+};
+
+const mapStateToProps = function (state) {
+  return {
+    vendorsProps:state.myVendors.vendors,
+
+  };
+};
+export default connect(mapStateToProps,mapDispatchToProps) (VendorList)
