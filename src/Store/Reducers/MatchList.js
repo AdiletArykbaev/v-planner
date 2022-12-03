@@ -78,19 +78,7 @@ const initialState = {
       },
     ],
   },
-  detailVendor: {
-    finded: {
-      companyTitle: "default title",
-      companyDescription: "default desription",
-      aboutCompany: "about company",
-      priceRange: "default price range",
-      fieldOfActivity: "default fiend",
-      typeOfService: "default typeOfService",
-      weddingActivity: "default weddingActivity",
-      aboutTeam: "default about team",
-      companyAvatar: "1.jpg",
-    },
-  },
+
   detailLoading: false,
   error: null,
 };
@@ -115,24 +103,7 @@ export default function matchListReducer(state = initialState, action) {
 
         error: action.error,
       };
-    case GET_DETAIL_VENDOR:
-      return {
-        detailLoading: true,
-      };
-    case GET_DETAIL_VENDOR_SUCESS: {
-      return {
-        ...state,
-        detailVendor: action.payload.data,
-        detailLoading: false,
-      };
-    }
-    case GET_DETAIL_VENDOR_FAILED: {
-      return {
-        ...state,
-        error: action.payload.error,
-        detailLoading: false,
-      };
-    }
+
     default:
       return state;
   }

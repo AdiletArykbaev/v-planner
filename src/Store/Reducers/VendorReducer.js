@@ -27,6 +27,7 @@ export default function VendorReducer(state = initialState, action) {
         loading: true,
       };
     case VENDOR_SUCCESS:
+      console.log(action.type, action.payload.data)
       return {
         ...state,
         loading: false,

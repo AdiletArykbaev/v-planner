@@ -13,18 +13,23 @@ import Button from "../components/UI/Button";
 import { ModalContext } from "../context/ModalContext";
 import useDevice from "../hooks/useDevice";
 import { connect } from "react-redux";
+import {getDetailVendor} from "../Store/Actions/getVendorAction";
+import {useDispatch} from "react-redux";
 
 SwiperCore.use([Navigation]);
 
-function VendorItem(props) {
-  console.log("props in vendor item", props);
-  console.log("is loading?", props.isLoading);
-  const { id } = useParams();
+function VendorItem({vendorMore,isLoading}) {
+
+  const {id } = useParams();
+  const dispatch = useDispatch()
   const navigate = useNavigate();
 
   const modal = useContext(ModalContext);
   const device = useDevice();
 
+  useEffect(()=>{
+      dispatch(getDetailVendor(id))
+  },[])
   const [like, setLike] = useState(false);
 
   const [swiperRef, setSwiperRef] = useState(null);
@@ -60,12 +65,12 @@ function VendorItem(props) {
     modal.start();
     modal.setContent(<UnlikeModal onCallback={() => setLike(false)} />);
   };
-  console.log("props dto ", props.dto);
-  console.log("props findend", props.dto.finded.aboutCompany);
-  const image = props.dto.finded.companyAvatar;
+  const images = vendorMore.vendorData.vendorModel.photos
+  console.log("vendor more",vendorMore)
+  console.log("images",images)
   return (
     <>
-      {props.isLoading ? (
+      {isLoading ? (
         <div>loading...</div>
       ) : (
         <section className="vendor">
@@ -77,7 +82,7 @@ function VendorItem(props) {
             <div className="vendor__video">
               <video
                 src="/assets/video/483040_2.mp4"
-                poster={`http://localhost:7000/${image}`}
+                poster={`https://images-and-videos.fra1.digitaloceanspaces.com/images/${images[0].name}`}
               ></video>
             </div>
             <div className="vendor__body">
@@ -85,7 +90,7 @@ function VendorItem(props) {
                 <div className="header-vendor__content">
                   <h3 className="header-vendor__title">
                     <span className="header-vendor__title-text">
-                      {props.dto.finded.companyTitle}
+                      {vendorMore.vendorData.vendorModel.companyTitle}
                     </span>
                     {like ? (
                       <i
@@ -110,10 +115,10 @@ function VendorItem(props) {
                     )}
                   </h3>
                   <h4 className="header-vendor__price">
-                    {props.dto.finded.priceRange}
+                    {vendorMore.vendorData.vendorModel.companyDescription}
                   </h4>
                   <div className="header-vendor__text">
-                    {props.dto.finded.companyDescription}
+                    {vendorMore.vendorData.vendorModel.companyDescription}
                   </div>
                 </div>
                 <div className="header-vendor__actions">
@@ -136,83 +141,21 @@ function VendorItem(props) {
                         disabledClass: "slider-vendor__navigation-disabled",
                       }}
                     >
-                      <SwiperSlide className="slider-vendor__slide">
-                        <a
-                          data-fancybox="gallery"
-                          href="/assets/images/vendor-slider/slide-1.jpg"
-                        >
-                          <img
-                            src="/assets/images/vendor-slider/slide-1.jpg"
-                            alt=""
-                          />
-                        </a>
-                      </SwiperSlide>
-                      <SwiperSlide className="slider-vendor__slide">
-                        <a
-                          data-fancybox="gallery"
-                          href="/assets/images/vendor-slider/slide-2.jpg"
-                        >
-                          <img
-                            src="/assets/images/vendor-slider/slide-2.jpg"
-                            alt=""
-                          />
-                        </a>
-                      </SwiperSlide>
-                      <SwiperSlide className="slider-vendor__slide">
-                        <a
-                          data-fancybox="gallery"
-                          href="/assets/images/vendor-slider/slide-3.jpg"
-                        >
-                          <img
-                            src="/assets/images/vendor-slider/slide-3.jpg"
-                            alt=""
-                          />
-                        </a>
-                      </SwiperSlide>
-                      <SwiperSlide className="slider-vendor__slide">
-                        <a
-                          data-fancybox="gallery"
-                          href="/assets/images/vendor-slider/slide-1.jpg"
-                        >
-                          <img
-                            src="/assets/images/vendor-slider/slide-1.jpg"
-                            alt=""
-                          />
-                        </a>
-                      </SwiperSlide>
-                      <SwiperSlide className="slider-vendor__slide">
-                        <a
-                          data-fancybox="gallery"
-                          href="/assets/images/vendor-slider/slide-2.jpg"
-                        >
-                          <img
-                            src="/assets/images/vendor-slider/slide-2.jpg"
-                            alt=""
-                          />
-                        </a>
-                      </SwiperSlide>
-                      <SwiperSlide className="slider-vendor__slide">
-                        <a
-                          data-fancybox="gallery"
-                          href="/assets/images/vendor-slider/slide-3.jpg"
-                        >
-                          <img
-                            src="/assets/images/vendor-slider/slide-3.jpg"
-                            alt=""
-                          />
-                        </a>
-                      </SwiperSlide>
-                      <SwiperSlide className="slider-vendor__slide">
-                        <a
-                          data-fancybox="gallery"
-                          href="/assets/images/vendor-slider/slide-1.jpg"
-                        >
-                          <img
-                            src="/assets/images/vendor-slider/slide-1.jpg"
-                            alt=""
-                          />
-                        </a>
-                      </SwiperSlide>
+                      {images.map((item,index)=>{
+                        return  <SwiperSlide className="slider-vendor__slide" key={index}>
+                          <a
+                              data-fancybox="gallery"
+                              href={`https://images-and-videos.fra1.digitaloceanspaces.com/images/${item.name}`}
+                          >
+                            <img
+                                src={`https://images-and-videos.fra1.digitaloceanspaces.com/images/${item.name}`}
+                                alt=""
+                            />
+                          </a>
+                        </SwiperSlide>
+                      })}
+
+
                       <div className="slider-vendor__prev" ref={prevRef}>
                         <i className="icon-arrow"></i>
                       </div>
@@ -226,7 +169,7 @@ function VendorItem(props) {
               <div className="vendor__about about-vendor">
                 <h4 className="about-vendor__title">About</h4>
                 <p className="about-vendor__text">
-                  {props.dto.finded.aboutCompany}
+                  {vendorMore.vendorData.vendorModel.aboutCompany}
                 </p>
               </div>
               <div className="vendor__services services-vendor">
@@ -234,13 +177,13 @@ function VendorItem(props) {
                 <div className="services-vendor__list">
                   <div className="services-vendor__item">
                     <div className="services-vendor__subtitle">
-                      {props.dto.finded.fieldOfActivity}
+                      {vendorMore.vendorData.vendorModel.fieldOfActivity}
                     </div>
-                    <p>{props.dto.finded.typeOfService}</p>
+                    <p>{vendorMore.vendorData.vendorModel.typeOfService}</p>
                   </div>
                   <div className="services-vendor__item">
                     <div className="services-vendor__subtitle"></div>
-                    <p>{props.dto.finded.weddingActivity}</p>
+                    <p>{vendorMore.vendorData.vendorModel.weddingActivity}</p>
                   </div>
                   <div className="services-vendor__item">
                     <div className="services-vendor__subtitle">
@@ -285,11 +228,12 @@ function VendorItem(props) {
               >
                 <h4 className="about-vendor__title">About Team</h4>
                 <p className="about-vendor__text">
-                  {props.dto.finded.aboutTeam}
+                  {vendorMore.vendorData.vendorModel.aboutTeam}
                 </p>
               </div>
               <GalleryGrid>
                 <GalleryGridCell>
+
                   <GalleryGridImg
                     src="/assets/images/gallery/img-1@1x.jpg"
                     alt="Galley grid"
@@ -357,10 +301,10 @@ function VendorItem(props) {
     </>
   );
 }
+
 const mapStateToProps = function (state) {
   return {
-    dto: state.matchList.detailVendor,
-    isLoading: state.matchList.detailLoading,
+    vendorMore: state.vendorMore,
   };
 };
 export default connect(mapStateToProps)(VendorItem);

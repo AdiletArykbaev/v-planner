@@ -1,11 +1,14 @@
 import {useEffect, useState} from "react"
 import { useNavigate } from "react-router-dom"
-import {connect} from "react-redux";
+import {connect, useDispatch} from "react-redux";
 import {getLikedVendors} from "../Store/Actions/getLikedVendors";
+import {getDetailVendor} from "../Store/Actions/getVendorAction";
 
 
 function VendorList({getLiked,vendorsProps}) {
   console.log("vendors",vendorsProps)
+  const dispatch = useDispatch()
+
   const [vendors, setVendors] = useState([
     {id: 1, src: "/assets/images/vendor-poster.jpg", title: "Wedding Cakes", price: "2000-3000$", text: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit..."},
     {id: 2, src: "/assets/images/vendor-poster.jpg", title: "Wedding Cakes", price: "2000-3000$", text: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit..."},
@@ -34,7 +37,7 @@ function VendorList({getLiked,vendorsProps}) {
             vendorsProps.map(vendor => (
               <div className="vendors__item item-vendor" key={vendor.id}>
                 <div className="item-vendor__header" onClick={() => navigate(`/vendor/${vendor.id}`)}>
-                  <img  src={`https://images-and-videos.fra1.digitaloceanspaces.com/images/${vendor.photos[1].name}`} alt="Avatar" />
+                  <img className="item-vendor__img"  src={`https://images-and-videos.fra1.digitaloceanspaces.com/images/${vendor.photos[1].name}`} alt="Avatar" />
 
                   <div className="item-vendor__actions">
                     <div className="item-vendor__like" onClick={e => e.stopPropagation()}><i className="icon-like"></i></div>
@@ -48,7 +51,11 @@ function VendorList({getLiked,vendorsProps}) {
                   </div>
                 </div>
                 <div className="item-vendor__body">
-                  <h4 className="item-vendor__title" onClick={() => navigate(`/vendor/${vendor.id}`)}>{ vendor.companyTitle }</h4>
+                  <h4 className="item-vendor__title" onClick={() =>{
+
+                    navigate(`/vendor/${vendor.id}`)}}>
+                    { vendor.companyTitle }
+                  </h4>
                   <div className="item-vendor__price">{ vendor.weddingActivity }</div>
                   <div className="item-vendor__text">{ vendor.companyDescription }</div>
                 </div>
