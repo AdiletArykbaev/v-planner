@@ -6,12 +6,15 @@ import {
 import axios from "axios";
 
 export const getAllVendorsAction = () => {
-  return (dispatch) => {
+  return (dispatch,getState) => {
     dispatch(fetchStart);
-
-    axios
-      .get(`http://localhost:7000/getAllVendors`)
-      .then((res) => {
+    const {userInfo} = getState()
+    axios({
+      method: "get",
+      url: "http://147.182.224.144:8080/matches/vendors-from-match",
+      headers: { "Content-Type": "multipart/form-data",Authorization:`Bearer ${userInfo.token}`},
+    }).then((res) => {
+        console.log("response in matchlist js",res)
         dispatch(fetchSuccess(res));
       })
       .catch((err) => {

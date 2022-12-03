@@ -28,7 +28,7 @@ const CabinetHeader = ({ name, image }) => {
   const state = useSelector((state) => state.userInfo);
 
   const { userInfo } = useSelector((state) => state);
-
+  console.log("state in notlify",state)
   return (
     <header className="header header-shadow">
       <div className="container">
@@ -48,7 +48,7 @@ const CabinetHeader = ({ name, image }) => {
               <div className="nav-header__text">Hi, {name}!</div>
               <div className="nav-header__icon border">
                 {auth.user.profile.avatar ? (
-                  <img src={`http://localhost:7000/${image}`} alt="Avatar" />
+                  <img src={`https://images-and-videos.fra1.digitaloceanspaces.com/images/${image}`} alt="Avatar" />
                 ) : (
                   <i className="icon-camera"></i>
                 )}

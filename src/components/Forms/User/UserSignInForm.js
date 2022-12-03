@@ -26,7 +26,7 @@ const UserSignInForm = () => {
 
   const signIn = (data) => {
     const reqData = {
-      mail: data[f.email],
+      email: data[f.email],
       password: data[f.password],
     };
     dispatch(loginAction(reqData));
@@ -54,19 +54,19 @@ const UserSignInForm = () => {
     if (token.length > 10) {
       auth.login(
         process.env.REACT_APP_ROLE_USER,
-        userData.mail,
+        userData.email,
         userData.firstName,
         userData.surname,
-        userData.phone,
-        userData.image,
+        userData.phoneNumber,
+        userData.clientModel.photoModel.name,
         userData.nickname,
         userData.partnersFirstName,
         userData.partnersFirstName,
-        userData.engagementDate,
-        userData.weddingDate,
-        userData.engagementPlace,
-        userData.countOfGuest,
-        userData.budget,
+        userData.clientModel.engagementDate,
+        userData.clientModel.weddingDate,
+        userData.city,
+        userData.clientModel.amountOfGuests,
+        "6000$",
         token
       );
     }

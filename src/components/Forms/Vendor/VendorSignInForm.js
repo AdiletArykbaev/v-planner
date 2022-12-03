@@ -8,8 +8,7 @@ import Button from "../../UI/Button";
 import { ModalContext } from "../../../context/ModalContext";
 import { AuthContext } from "../../../context/AuthContext";
 import { useDispatch } from "react-redux";
-import { loginVendorAction } from "../../../Store/Actions/VendorLogin.js";
-
+import {loginAction} from "../../../Store/Actions/AuthAction"
 const VendorSignInForm = () => {
   const auth = useContext(AuthContext);
   const modal = useContext(ModalContext);
@@ -24,7 +23,7 @@ const VendorSignInForm = () => {
   });
 
   const signIn = (data) => {
-    dispatch(loginVendorAction(data.email, data.password));
+    dispatch(loginAction(data.email, data.password));
     auth.login(
       data[f.email],
       data[f.password],

@@ -1,16 +1,20 @@
 import {
   GET_DETAIL_VENDOR,
-  GET_DETAIL_VENDOR_SUCESS,
-  GET_DETAIL_VENDOR_FAILED,
+  GET_DETAIL_VENDOR_FAILED, GET_DETAIL_VENDOR_SUCCESS,
 } from "../types";
 import axios from "axios";
 
 export const getDetailVendor = (id) => {
-  return (dispatch) => {
+  return (dispatch,getState) => {
     dispatch(fetchStart);
-
-    axios
-      .get(`http://localhost:7000/vendor/${id}`)
+    const state = getState()
+    const token = state.userInfo.token
+    console.log("token in getDetail ",token)
+    axios({
+      method: "get",
+      url: `http://147.182.224.144:8080/vendors/getById?id=${id}`,
+      headers: { "Content-Type": "multipart/form-data",Authorization:`Bearer ${token}`}
+    })
       .then((res) => {
         console.log("response in detail vendor", res);
         dispatch(fetchSuccess(res));
@@ -22,9 +26,9 @@ export const getDetailVendor = (id) => {
 };
 const fetchSuccess = (response) => {
   return {
-    type: GET_DETAIL_VENDOR_SUCESS,
+    type: GET_DETAIL_VENDOR_SUCCESS,
     payload: {
-      data: response.data,
+      data: response.data.result,
     },
   };
 };

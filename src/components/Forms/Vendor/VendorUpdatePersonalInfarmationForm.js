@@ -76,7 +76,7 @@ const VendorUpdatePersonalInfarmationForm = ({
           {(src || auth.user.profile.avatar) && (
             <img
               className="photo-upload__img"
-              src={`http://localhost:7000/${img}`}
+              src={`https://images-and-videos.fra1.digitaloceanspaces.com/images/${img}`}
               alt=""
             />
           )}

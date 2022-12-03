@@ -67,7 +67,7 @@ const UserUpdatePersonalInformation = () => {
           {(src || auth.user.profile.avatar) && (
             <img
               className="photo-upload__img"
-              src={`http://localhost:7000/${userInfo.userData.image}`}
+              src={`https://images-and-videos.fra1.digitaloceanspaces.com/images/${userInfo.userData.clientModel?.photoModel?.name}`}
               alt=""
             />
           )}

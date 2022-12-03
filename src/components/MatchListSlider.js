@@ -3,17 +3,18 @@ import SwiperCore, { Navigation, Pagination, Virtual } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { AuthContext } from "../context/AuthContext";
 import { connect } from "react-redux";
-
+import {useSelector} from "react-redux";
+import axios from "axios"
 SwiperCore.use([Pagination, Navigation, Virtual]);
 
 const MatchListSlider = ({ files = [], vendorId, triggerStories, data }) => {
   const [swiperRef, setSwiperRef] = useState(null);
   // const [flagLast, setFlagLast] = useState(false)
   // const [flagFirst, setFlagFirst] = useState(true)
-
+  const {token} = useSelector(state=>state.userInfo)
   const prevRef = useRef(null);
   const nextRef = useRef(null);
-
+  console.log("props in slider",files,data)
   const auth = useContext(AuthContext);
 
   useEffect(() => {
@@ -38,6 +39,16 @@ const MatchListSlider = ({ files = [], vendorId, triggerStories, data }) => {
         },
       },
     });
+    axios({
+      method: "put",
+      url: `http://147.182.224.144:8080/matches/liked-or-not?vendorId=${vendorId}&status=true`,
+      headers: { "Content-Type": "multipart/form-data","Access-Control-Allow-Origin":"*",Authorization:`Bearer ${token}`},
+    }).then((res) => {
+      console.log("response in vendor like",res)
+    })
+        .catch((err) => {
+          console.log(err)
+        })
     triggerStories();
   };
 
@@ -45,6 +56,16 @@ const MatchListSlider = ({ files = [], vendorId, triggerStories, data }) => {
     const user = auth.user;
     delete auth.user.profile.likes.users[vendorId];
     auth.setUser({ ...user });
+    axios({
+      method: "put",
+      url: `http://147.182.224.144:8080/matches/liked-or-not?vendorId=${vendorId}&status=false`,
+      headers: { "Content-Type": "multipart/form-data","Access-Control-Allow-Origin":"*",Authorization:`Bearer ${token}`},
+    }).then((res) => {
+      console.log("response in vendor dis",res)
+    })
+        .catch((err) => {
+          console.log(err)
+        })
     triggerStories();
   };
 
@@ -71,8 +92,8 @@ const MatchListSlider = ({ files = [], vendorId, triggerStories, data }) => {
       virtual
     >
       {files.map((file, idx) => (
-        <SwiperSlide key={file} virtualIndex={idx}>
-          <img src={file} alt="" />
+        <SwiperSlide key={file.id} virtualIndex={idx}>
+          <img src={`https://images-and-videos.fra1.digitaloceanspaces.com/images/${file.name}`} alt="" />
           <div className="slider-matchlist__actions">
             <div className="slider-matchlist__like" onClick={like}>
               <i className="icon-like"></i>
