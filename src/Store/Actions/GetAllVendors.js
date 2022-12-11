@@ -11,7 +11,7 @@ export const getAllVendorsAction = () => {
     const {userInfo} = getState()
     axios({
       method: "get",
-      url: "http://147.182.224.144:8080/matches/vendors-from-match",
+      url: `${process.env.REACT_APP_API_URL}/matches/vendors-from-match`,
       headers: { "Content-Type": "multipart/form-data",Authorization:`Bearer ${userInfo.token}`},
     }).then((res) => {
         console.log("response in matchlist js",res)

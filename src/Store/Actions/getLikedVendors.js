@@ -13,7 +13,7 @@ export const getLikedVendors = () =>{
 
         axios({
             method: "get",
-            url: "http://147.182.224.144:8080/matches/liked-vendors",
+            url: `${process.env.REACT_APP_API_URL}/matches/liked-vendors`,
             headers: { "Content-Type": "multipart/form-data",Authorization:`Bearer ${userInfo.token}`},
         }).then((res) => {
             console.log("response in liked vendorsJs js",res)

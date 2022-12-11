@@ -37,7 +37,7 @@ function VendorList({getLiked,vendorsProps}) {
             vendorsProps.map(vendor => (
               <div className="vendors__item item-vendor" key={vendor.id}>
                 <div className="item-vendor__header" onClick={() => navigate(`/vendor/${vendor.id}`)}>
-                  <img className="item-vendor__img"  src={`https://images-and-videos.fra1.digitaloceanspaces.com/images/${vendor.photos[1].name}`} alt="Avatar" />
+                  <img className="item-vendor__img"  src={`https://images-and-videos.fra1.digitaloceanspaces.com/i  mages/${vendor.photos[1].name}`} alt="Avatar" />
 
                   <div className="item-vendor__actions">
                     <div className="item-vendor__like" onClick={e => e.stopPropagation()}><i className="icon-like"></i></div>

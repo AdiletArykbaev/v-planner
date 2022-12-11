@@ -6,7 +6,7 @@ export const loginAction = ({ email, password }) => {
     dispatch(LoginStart);
 
     axios
-      .post(`http://147.182.224.144:8080/user/login`, {
+      .post(`${process.env.REACT_APP_API_URL}/user/login`, {
         email,
         password,
       })
