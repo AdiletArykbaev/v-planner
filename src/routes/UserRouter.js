@@ -17,22 +17,24 @@ import VendorList from "../pages/VendorList";
 import VendorItem from "../pages/VendorItem";
 import UserChat from "../pages/Chat/UserChat";
 import { connect } from "react-redux";
-import {getAllVendorsAction} from "../Store/Actions/GetAllVendors";
-function UserRouter(props) {
+
+function UserRouter({token,userDto,loading,chat}) {
   const auth = useContext(AuthContext);
-  const url = props.userDto.clientModel?.photoModel?.name
-  props.getAll()
+  const url = userDto.clientModel?.photoModel?.name
+
+
+
   return (
     <Routes>
       <Route
         path="/"
         element={
-          <CabinetLayout name={props.userDto.firstName} image={url} />
+          <CabinetLayout name={userDto.firstName} image={url} />
         }
       >
         <Route path="/" element={<MainPageLayout />}>
           <Route path="/" element={<Navigate to="/matchlist" />} />
-          <Route path="/matchlist" element={props.loading ?   <div>Loading....</div>:<Matchlist />}/>}
+          <Route path="/matchlist" element={<Matchlist />}/>}
           {Object.keys(auth.user.profile.likes.users).length >= 10 && (
             <>
               <Route path="/quotes" element={<UserQuotes />} />
@@ -63,14 +65,10 @@ const mapStateToProps = function (state) {
   return {
     userDto:state.userInfo.userData,
     token:state.userInfo.token,
-    loading:state.matchList.loading
-
-  };
-};
-const mapDispatchToProps = (dispatch) => {
-  return {
-    getAll: () => dispatch(getAllVendorsAction()),
+    loading:state.matchList.loading,
+    chat:state.chat
   };
 };
 
-export default connect(mapStateToProps,mapDispatchToProps)(UserRouter);
+
+export default connect(mapStateToProps)(UserRouter);

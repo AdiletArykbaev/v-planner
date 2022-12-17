@@ -66,7 +66,7 @@ const Stories = ({ onCallback, triggerStories,dto }) => {
         <SwiperSlide
           className="stories__slide"
           key={slide.id}
-          // virtualIndex={idx}
+          virtualIndex={idx}
           onClick={() => onCallback(slide)}
         >
           <img src={slide.src} alt="" />

@@ -12,7 +12,7 @@ export const getDetailVendor = (id) => {
     console.log("token in getDetail ",token)
     axios({
       method: "get",
-      url: `http://147.182.224.144:8080/vendors/getById?id=${id}`,
+      url: `${process.env.REACT_APP_API_URL}/vendors/getById?id=${id}`,
       headers: { "Content-Type": "multipart/form-data",Authorization:`Bearer ${token}`}
     })
       .then((res) => {

@@ -53,7 +53,7 @@ export const signUpAction = ({
 
     axios({
       method: "post",
-      url: "http://147.182.224.144:8080/clients/create",
+      url: `${process.env.REACT_APP_API_URL}/clients/create`,
       data: reqBody,
       headers: { "Content-Type": "multipart/form-data" },
     })

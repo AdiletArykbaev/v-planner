@@ -4,14 +4,20 @@ import VendorReducer from "./Reducers/VendorReducer";
 import matchListReducer from "./Reducers/MatchList";
 import LikedVendors from "./Reducers/LikedVendors";
 import DetailVendor from "./Reducers/VendorInfoReducer";
+import chatReducer from "./Reducers/Chat";
+import { composeWithDevTools } from 'redux-devtools-extension';
 
 import thunk from "redux-thunk";
 
-const reducer = combineReducers({
+const reducers = combineReducers({
   userInfo: userReducer,
   vendorInfo: VendorReducer,
   matchList: matchListReducer,
   myVendors:LikedVendors,
-  vendorMore:DetailVendor
+  vendorMore:DetailVendor,
+  chat:chatReducer
 });
-export const store = createStore(reducer, applyMiddleware(thunk));
+const reduxDevTools = composeWithDevTools(
+    applyMiddleware(thunk)
+)
+export const store = createStore(reducers,reduxDevTools);

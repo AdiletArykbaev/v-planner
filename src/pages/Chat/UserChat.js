@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState,useEffect } from "react"
 import { useParams } from "react-router-dom"
 import useDevice from "../../hooks/useDevice"
 import ChatForm from "./ChatForm"
@@ -6,9 +6,17 @@ import ChatHeader from "./ChatHeader"
 import ChatHistory from "./ChatHistory"
 import ChatMenu from "./ChatMenu"
 import ChatUsers from "./ChatUsers"
+import {getMessages as getMessagesAction} from "../../Store/Actions/getAllMessages";
+import {connect} from "react-redux";
+import {connectToChat } from "../../utils/webSocketChat"
 
-export default function UserChat() {
-
+function UserChat({chatState,getMessages,userId,userName}) {
+  useEffect(() => {
+    getMessages()
+    connectToChat(userId,11,userName,"companyName")
+    console.log( "chat sock",chatState)
+  }, []);
+  console.log("state in chat",chatState)
   const [users, setUsers] = useState([
     {id: 1, avatar: "/assets/images/vendor.png", name: "Vendor", lastMessage: {message: "Lorem ipsum dolor sit sdfsdf", type: "text", time: "11:55pm"}, newMessages: 0},
     {id: 2, avatar: "/assets/images/vendor.png", name: "Vendor", lastMessage: {message: "Lorem ipsum dolor sit sdfsdf", type: "text", time: "01:45pm"}, newMessages: 0},
@@ -25,7 +33,7 @@ export default function UserChat() {
     },
     {
       id: 2,
-      type: "textMessage",
+      type: "serviceMessage",
       message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et ",
       time: "12:05pm",
       isRecipient: true
@@ -130,3 +138,16 @@ export default function UserChat() {
     </section>
   )
 }
+const mapStateToProps = function (state) {
+  return {
+    chatState:state.chat,
+    userId:state.userInfo.userData.id,
+    userName:state.userInfo.userData.firstName
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getMessages: ()=> dispatch(getMessagesAction())
+  };
+};
+export default connect(mapStateToProps,mapDispatchToProps)(UserChat);
