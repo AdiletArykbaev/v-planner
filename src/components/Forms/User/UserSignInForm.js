@@ -51,7 +51,7 @@ const UserSignInForm = () => {
               countGuest,
               budget,
               token*/
-    if (token.length > 10) {
+    if (userData.surname.length > 1) {
       auth.login(
         process.env.REACT_APP_ROLE_USER,
         userData.email,

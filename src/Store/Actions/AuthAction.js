@@ -1,10 +1,11 @@
 import { LOGIN_USER, LOGIN_SUCCESS, LOGIN_FAILED } from "../types";
 import axios from "axios";
+import {getCurrentUser} from "./getCurrentUser"
 
 export const loginAction = ({ email, password }) => {
+  console.log(email,password)
   return (dispatch) => {
     dispatch(LoginStart);
-
     axios
       .post(`${process.env.REACT_APP_API_URL}/user/login`, {
         email,
@@ -12,10 +13,11 @@ export const loginAction = ({ email, password }) => {
       })
       .then((res) => {
         console.log(res,"response in res")
-        dispatch(loginSuccess(res));
+        dispatch(getCurrentUser(res.data?.result.jwt))
+        dispatch(loginSuccess(res))
       })
       .catch((err) => {
-        dispatch(addTodoFailure(err.message));
+        dispatch(loginFailed(err.message));
       });
   };
 };
@@ -24,7 +26,6 @@ const loginSuccess = (response) => {
   return {
     type: LOGIN_SUCCESS,
     payload: {
-      data: response.data.userData,
       token: response.data?.result.jwt,
     },
   };
@@ -34,7 +35,7 @@ const LoginStart = () => ({
   type: LOGIN_USER,
 });
 
-const addTodoFailure = (error) => ({
+const loginFailed = (error) => ({
   type: LOGIN_FAILED,
   payload: {
     error,

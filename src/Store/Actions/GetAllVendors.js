@@ -18,6 +18,7 @@ export const getAllVendorsAction = () => {
         dispatch(fetchSuccess(res));
       })
       .catch((err) => {
+        console.log("errror in getAllVendorsAction",err)
         dispatch(fetchFailed(err.message));
       });
   };

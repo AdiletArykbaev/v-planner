@@ -8,6 +8,7 @@ import axios from "axios"
 SwiperCore.use([Pagination, Navigation, Virtual]);
 
 const MatchListSlider = ({ files = [], vendorId, triggerStories, data }) => {
+  console.log("files in slider",data)
   const [swiperRef, setSwiperRef] = useState(null);
   // const [flagLast, setFlagLast] = useState(false)
   // const [flagFirst, setFlagFirst] = useState(true)
@@ -41,7 +42,7 @@ const MatchListSlider = ({ files = [], vendorId, triggerStories, data }) => {
     });
     axios({
       method: "put",
-      url: `http://147.182.224.144:8080/matches/liked-or-not?vendorId=${vendorId}&status=true`,
+      url: `${process.env.REACT_APP_API_URL}/matches/liked-or-not?vendorId=${vendorId}&status=true`,
       headers: { "Content-Type": "multipart/form-data","Access-Control-Allow-Origin":"*",Authorization:`Bearer ${token}`},
     }).then((res) => {
       console.log("response in vendor like",res)
@@ -58,7 +59,7 @@ const MatchListSlider = ({ files = [], vendorId, triggerStories, data }) => {
     auth.setUser({ ...user });
     axios({
       method: "put",
-      url: `http://147.182.224.144:8080/matches/liked-or-not?vendorId=${vendorId}&status=false`,
+      url: `${process.env.REACT_APP_API_URL}/matches/liked-or-not?vendorId=${vendorId}&status=false`,
       headers: { "Content-Type": "multipart/form-data","Access-Control-Allow-Origin":"*",Authorization:`Bearer ${token}`},
     }).then((res) => {
       console.log("response in vendor dis",res)

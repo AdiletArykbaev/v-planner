@@ -1,15 +1,17 @@
     import {
-  LOGIN_USER,
-  LOGIN_SUCCESS,
-  LOGIN_FAILED,
+  AUTH_USER,
+  AUTH_USER_SUCCESS,
+  AUTH_USER_FAILED,
   SIGNIN_SUCCESS,
   SIGNIN_USER,
-  SIGNIN_FAILED,
+  SIGNIN_FAILED, GET_ALL_MESSAGES,
 } from "../types";
 
 const initialState = {
   loading: false,
-  userData: "",
+  userData: {
+    surname:""
+  },
   token: "твой токен",
   error: null,
 };
@@ -17,13 +19,9 @@ const initialState = {
 export default function userReducer(state = initialState, action) {
 
   switch (action.type) {
-    case LOGIN_USER:
-      return {
-        ...state,
-        loading: true,
-      };
-    case LOGIN_SUCCESS:
-      return {
+
+    case AUTH_USER_SUCCESS:
+      return { 
         ...state,
         loading: false,
         error: null,
@@ -31,7 +29,7 @@ export default function userReducer(state = initialState, action) {
 
         token: action.payload?.token,
       };
-    case LOGIN_FAILED:
+    case AUTH_USER_FAILED:
       return {
         ...state,
         loading: false,

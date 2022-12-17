@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getDetailVendor } from "../Store/Actions/getVendorAction.js";
 import { connect } from "react-redux";
 import { getAllVendorsAction } from "../Store/Actions/GetAllVendors.js";
+import {getMessages as getMessagesAction} from "../Store/Actions/getAllMessages";
 
 
 SwiperCore.use([Lazy, Virtual]);
@@ -360,12 +361,14 @@ const storiesData = [
 
 const marks = [{ value: 0 }, { value: 50 }, { value: 100 }];
 
- function Matchlist({ dto, getAll,token,loading}) {
-  const [data, setData] = useState(null);
+ function Matchlist({ dto, getAll,token,loading,getMessages,chatState}) {
+  // const [data, setData] = useState(dto.result[0]);
+   const [data, setData] = useState(dto.result[0]);
+  console.log("dto",dto)
   const [filterActive, setFilterActive] = useState(false);
-  const { userData } = useSelector((state) => state.userInfo);
-  const { allVendors } = useSelector((state) => state.matchList);
+
   const navigate = useNavigate();
+  console.log("data photos ебучий",data.photos)
   const dispatch = useDispatch();
   const [triggerStoriesSlide, setTriggerStoriesSlide] = useState(false);
   const theme = useContext(ThemeContext);
@@ -417,6 +420,15 @@ const marks = [{ value: 0 }, { value: 50 }, { value: 100 }];
   };
   const [story,setStory] = useState("")
   console.log("all vendors",dto)
+   useEffect(() => {
+     getAll()
+     getMessages()
+
+   }, [token]);
+  console.log("chatState after changing",chatState)
+
+  console.log("Загрузка при рендере компоненты",loading)
+  console.log(token)
 
   return (
       <>
@@ -536,7 +548,7 @@ const marks = [{ value: 0 }, { value: 50 }, { value: 100 }];
               <div className="content-matchlist__body">
                 <div className="content-matchlist__inner">
                   <div className="content-matchlist__content">
-                    {!data ? (
+                    {loading==true ? (
                         "Loading..."
                     ) : (
                         <MatchListSlider
@@ -550,7 +562,7 @@ const marks = [{ value: 0 }, { value: 50 }, { value: 100 }];
                 </div>
               </div>
               <div className="content-matchlist__info info-matchlist">
-                {!data ? (
+                {loading==true ? (
                     "Loading..."
                 ) : (
                     <>
@@ -601,10 +613,18 @@ const mapStateToProps = function (state) {
   return {
     dto: state.matchList.allVendors,
     token:state.userInfo.token,
-    loading:state.matchList.loading
+    loading:state.matchList.loading,
+    chatState:state.chat
+
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getAll: () => dispatch(getAllVendorsAction()),
+    getMessages: ()=> dispatch(getMessagesAction())
 
   };
 };
 
 
-export default connect(mapStateToProps)(Matchlist);
+export default connect(mapStateToProps,mapDispatchToProps)(Matchlist);

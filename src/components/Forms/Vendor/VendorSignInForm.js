@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { useContext } from "react";
+import {useContext, useEffect} from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schemaVendorSignIn } from "../../../validation/schemas";
 import f from "../../../validation/fieldName";
@@ -7,12 +7,13 @@ import Input from "../../UI/Input";
 import Button from "../../UI/Button";
 import { ModalContext } from "../../../context/ModalContext";
 import { AuthContext } from "../../../context/AuthContext";
-import { useDispatch } from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {loginAction} from "../../../Store/Actions/AuthAction"
 const VendorSignInForm = () => {
   const auth = useContext(AuthContext);
   const modal = useContext(ModalContext);
   const dispatch = useDispatch();
+
   const {
     register,
     formState: { errors, isValid },
@@ -23,7 +24,11 @@ const VendorSignInForm = () => {
   });
 
   const signIn = (data) => {
-    dispatch(loginAction(data.email, data.password));
+      const reqData = {
+          email: data.email,
+          password: data.password,
+      };
+    dispatch(loginAction(reqData));
     auth.login(
       data[f.email],
       data[f.password],
