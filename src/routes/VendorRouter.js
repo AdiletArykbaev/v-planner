@@ -14,8 +14,10 @@ import VendorQuotes from "../pages/Quotes/VendorQuotes";
 import Reports from "../pages/Reports";
 import Rules from "../pages/Rules";
 import VendorChat from "../pages/Chat/VendorChat";
+import VendorQuote from "../pages/Quote/VendorQuote";
 import f from "../validation/fieldName";
 import {connect} from "react-redux";
+
 
  function VendorRouter({vendorData}) {
   console.log("data in forms in prive", f);
@@ -48,6 +50,7 @@ import {connect} from "react-redux";
           <Route path="/chat/:id" element={<VendorChat />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Route>
+        <Route path="/quote" element={<VendorQuote />} />
         <Route path="/account" element={<AccountPageLayout />}>
           <Route path="/account" element={<VendorAccount />} />
           <Route path="/account/:id" element={<VendorAccount />} />
