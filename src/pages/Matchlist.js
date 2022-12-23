@@ -368,7 +368,7 @@ const marks = [{ value: 0 }, { value: 50 }, { value: 100 }];
   const [filterActive, setFilterActive] = useState(false);
 
   const navigate = useNavigate();
-  console.log("data photos ебучий",data.photos)
+  // console.log("data photos ебучий",data.photos)
   const dispatch = useDispatch();
   const [triggerStoriesSlide, setTriggerStoriesSlide] = useState(false);
   const theme = useContext(ThemeContext);
@@ -552,8 +552,8 @@ const marks = [{ value: 0 }, { value: 50 }, { value: 100 }];
                         "Loading..."
                     ) : (
                         <MatchListSlider
-                            files={data.photos}
-                            vendorId={data.id}
+                            files={data?.photos}
+                            vendorId={data?.id}
                             triggerStories={triggerStories}
                             data={data}
                         />
@@ -566,23 +566,23 @@ const marks = [{ value: 0 }, { value: 50 }, { value: 100 }];
                     "Loading..."
                 ) : (
                     <>
-                      <h3 className="info-matchlist__title">{data.companyTitle}</h3>
+                      <h3 className="info-matchlist__title">{data?.companyTitle}</h3>
                       <div className="info-matchlist__content">
-                        <div className="info-matchlist__price">{data.price}</div>
+                        <div className="info-matchlist__price">{data?.price}</div>
                         <p className="info-matchlist__description">
-                          {data.companyDescription}
+                          {data?.companyDescription}
                         </p>
                         <div className="info-matchlist__subtitle">Services</div>
-                        <p className="italic">{data.typeOfService}</p>
+                        <p className="italic">{data?.typeOfService}</p>
                         <div className="info-matchlist__subtitle">About</div>
-                        <p>{data.aboutCompany}</p>
+                        <p>{data?.aboutCompany}</p>
                       </div>
                       <div className="info-matchlist__footer">
                         {Object.keys(auth.user.profile.likes.users).length >= 10 && (
                             <Button
                                 className="btn btn-go-chat d-block w-100"
                                 onClick={() => {
-                                  navigate(`/chat/${data.id}`);
+                                  navigate(`/chat/${data?.id}`);
                                 }}
                             >
                               Go Chat
@@ -592,8 +592,8 @@ const marks = [{ value: 0 }, { value: 50 }, { value: 100 }];
                         <Button
                             className="btn btn-light d-block w-100"
                             onClick={() => {
-                              dispatch(getDetailVendor(data.id));
-                              navigate(`/vendor/${data.id}`);
+                              dispatch(getDetailVendor(data?.id));
+                              navigate(`/vendor/${data?.id}`);
                             }}
                         >
                           View Vendor

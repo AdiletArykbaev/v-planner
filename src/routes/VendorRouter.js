@@ -14,7 +14,7 @@ import VendorQuotes from "../pages/Quotes/VendorQuotes";
 import Reports from "../pages/Reports";
 import Rules from "../pages/Rules";
 import VendorChat from "../pages/Chat/VendorChat";
-import VendorQuote from "../pages/Quote/VendorQuote";
+import Quote from "../pages/Quote/Quote";
 import f from "../validation/fieldName";
 import {connect} from "react-redux";
 
@@ -50,7 +50,7 @@ import {connect} from "react-redux";
           <Route path="/chat/:id" element={<VendorChat />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Route>
-        <Route path="/quote" element={<VendorQuote />} />
+        <Route path="/quote" element={<Quote />} />
         <Route path="/account" element={<AccountPageLayout />}>
           <Route path="/account" element={<VendorAccount />} />
           <Route path="/account/:id" element={<VendorAccount />} />
