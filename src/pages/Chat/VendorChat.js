@@ -1,11 +1,12 @@
 import { useState } from "react"
-import { useParams } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import useDevice from "../../hooks/useDevice"
 import ChatForm from "./ChatForm"
 import ChatHeader from "./ChatHeader"
 import ChatHistory from "./ChatHistory"
 import ChatMenu from "./ChatMenu"
 import ChatUsers from "./ChatUsers"
+import VendorQuote from "../Quote/VendorQuote"
 
 export default function VendorChat() {
 
@@ -111,10 +112,12 @@ export default function VendorChat() {
           (((isMobile || isLaptop) && id) || (!isMobile && !isLaptop)) && (
             <div className="chat__body body-chat">
               <ChatHeader user={user}>
-                <div className="header-body-chat__action quote">
-                  <span>Send Quote</span>
-                  <i className="icon-quote"></i>
-                </div>
+                <Link to='/quote' element={<VendorQuote />}>
+                  <div className="header-body-chat__action quote">
+                    <span>Send Quote</span>
+                    <i className="icon-quote"></i>
+                  </div>
+                </Link>
               </ChatHeader>
               <div>
                 <ChatHistory messages={messages} user={user} />
