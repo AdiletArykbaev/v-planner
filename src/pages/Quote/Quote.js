@@ -1,20 +1,41 @@
 import { useState } from "react"
 import VendorChat from "../Chat/VendorChat"
 import { Link } from "react-router-dom"
+import { QuoteBlockInfo } from "../../components/Quote/QuoteInfoBlock"
+import { QuoteRequisites } from "../../components/Quote/QuoteRequisites"
+import { QuoteComment } from "../../components/Quote/QuoteComment"
+import { QuoteDeclineButton } from "../../components/Quote/QuoteDeclineButton"
+import { QuoteAcceptButton } from "../../components/Quote/QuoteAcceptButton"
+import { QuoteTableOffers } from "../../components/Quote/QuoteTableOffers"
 
-function BlockInfo () {
-    return(
-        <div className="offer-data__info">
-            <div className="title">Title</div>
-            <div className="desc">When couples start thinking about their wedding plans, one of the details that typically first comes to mind is their wedding cake. While wedding cakes serve as the sweet ending to a celebration, dreaming up epic wedding cake ideas is a fun task to undertake as soon as you've set a date and conceptualized a design vision. Fewer wedding planning tasks are more therapeutic than scrolling through images of decadent tiered masterpieces decked out with sugar flowers—and we're here to help you do just that.</div>
-        </div>
-    )
-}
-
-export default function VendorQuote () {
+export default function Quote () {
 
     const [radioActive, setRadioActive] = useState(1)
     const [checkBoxToggle, setCheckBoxToggle] = useState(true)
+
+    const offers = [
+        {
+            id: 1,
+            title: 'Brand Design (Logo, Colours & Typography)',
+            description: 'Crafting a digital branding presence for developing the website and establishing a digital presence.',
+            qty: 1,
+            unitPrice: 25000,
+        },
+        {
+            id: 2,
+            title: 'Brand Design (Logo, Colours & Typography)',
+            description: 'Crafting a digital branding presence for developing the website and establishing a digital presence.',
+            qty: 1,
+            unitPrice: 25000,
+        },
+        {
+            id: 3,
+            title: 'Brand Design (Logo, Colours & Typography)',
+            description: 'Crafting a digital branding presence for developing the website and establishing a digital presence.',
+            qty: 1,
+            unitPrice: 25000,
+        },
+    ]
 
     return(
         <div className="quote">
@@ -32,22 +53,18 @@ export default function VendorQuote () {
 
                     <div className="quote__header">
                         <img className="mark" src="./assets/images/quote-mark.png" />
-                        <div className="quote__header__data">
-                            <div className="data_conteiner">
-                                <div className="data_conteiner__title">QUOTE NUMBER</div>
-                                <div className="data_conteiner__value">2732</div>
-                            </div>
-                            <div className="data_conteiner">
-                                <div className="data_conteiner__title">ISSUE DATE</div>
-                                <div className="data_conteiner__value">AUG 25, 2022</div>
-                            </div>
-                        </div>
+                        <QuoteRequisites quoteNum={2732} date={'AUG 25, 2022'} />
                     </div>
                     
                     <div className="quote__offer-data">
                         <div className="section-block">
-                            <BlockInfo />
-                            <table className="grid-table">
+                            <QuoteBlockInfo title={"Title"} description={"When couples start thinking about their wedding plans, one of the details that typically first comes to mind is their wedding cake. While wedding cakes serve as the sweet ending to a celebration, dreaming up epic wedding cake ideas is a fun task to undertake as soon as you've set a date and conceptualized a design vision. Fewer wedding planning tasks are more therapeutic than scrolling through images of decadent tiered masterpieces decked out with sugar flowers—and we're here to help you do just that."}/>
+
+                            <QuoteTableOffers offers={offers} />
+
+                            <QuoteTableOffers offers={offers} optional />
+
+                            {/* <table className="grid-table">
                                 <tr className="grid-table__title">
                                     <td className="grid-table__title__item first">
                                         MAIN OFFERS
@@ -158,7 +175,7 @@ export default function VendorQuote () {
                                         </td>
                                     </tr>
                                 </table>
-                            </div>
+                            </div> */}
 
                             <div className="offer-data__total">
                                 <div className="item-conteiner">
@@ -178,26 +195,11 @@ export default function VendorQuote () {
                     </div>
                     
                     <div className="section-block">
-                        <BlockInfo />
-                        <div className="additional-comm-conteiner">
-                            <div className="additional-comm-conteiner__title">Additional Comments</div>
-                            <div className="additional-comm-conteiner__comment-conteiner">
-                                <div className="comment-text">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                                </div>
-                            </div>
-                        </div>
+                    <QuoteBlockInfo title={"Title"} description={"When couples start thinking about their wedding plans, one of the details that typically first comes to mind is their wedding cake. While wedding cakes serve as the sweet ending to a celebration, dreaming up epic wedding cake ideas is a fun task to undertake as soon as you've set a date and conceptualized a design vision. Fewer wedding planning tasks are more therapeutic than scrolling through images of decadent tiered masterpieces decked out with sugar flowers—and we're here to help you do just that."}/>
+                        <QuoteComment comment={'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'} />
                         <div className="form_buttons">
-                            <button>
-                                <div className="form_buttons__item decline">
-                                    Decline
-                                </div>
-                            </button>
-                            <button>
-                                <div className="form_buttons__item accept">
-                                    Accept Quoto
-                                </div>
-                            </button>
+                            <QuoteDeclineButton />
+                            <QuoteAcceptButton />
                         </div>
                     </div>
                     

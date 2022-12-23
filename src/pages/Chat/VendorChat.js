@@ -6,7 +6,7 @@ import ChatHeader from "./ChatHeader"
 import ChatHistory from "./ChatHistory"
 import ChatMenu from "./ChatMenu"
 import ChatUsers from "./ChatUsers"
-import VendorQuote from "../Quote/VendorQuote"
+import Quote from "../Quote/Quote"
 
 export default function VendorChat() {
 
@@ -112,7 +112,7 @@ export default function VendorChat() {
           (((isMobile || isLaptop) && id) || (!isMobile && !isLaptop)) && (
             <div className="chat__body body-chat">
               <ChatHeader user={user}>
-                <Link to='/quote' element={<VendorQuote />}>
+                <Link to='/quote' element={<Quote />}>
                   <div className="header-body-chat__action quote">
                     <span>Send Quote</span>
                     <i className="icon-quote"></i>
