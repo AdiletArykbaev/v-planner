@@ -1,39 +1,40 @@
 import { VENDOR_SIGNIN, VENDOR_SUCCESS, VENDOR_FAILED } from "../types";
 import axios from "axios";
+import { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
 
 export const signUpAction = (data) => {
-  console.log("data in signUpAction", data);
-
+  // console.log("data in signUpAction", data);
   return (dispatch) => {
+
     dispatch(LoginStart);
     const reqBody = new FormData();
     const obj = {
       firstName:  data.name,
       surname:  data.lastName,
       phoneNumber: data.phone,
-      username:"username",
+      username: data.name,
       email: data.email,
       password: data.password,
       city: data.state.value,
       companyName: data.name,
       fieldOfActivity: data.type.value,
       typeOfService:  data.type.value,
-      priceRange:  data.priceRange.value,
+      priceFrom: data.priceRange.value.priceFrom,
+      priceTo: data.priceRange.value.priceTo,
       weddingActivity: data.activities.value,
       companyTitle: data.title,
-      companyDescription:data.description,
-      aboutCompany:data.aboutCompany,
-      aboutTeam:data.aboutTeam,
-      photoStyle:data.type.value,
+      companyDescription: data.description,
+      aboutCompany: data.aboutCompany,
+      aboutTeam: data.aboutTeam,
+      photoStyle: data.type.value,
       serviceModels:[
         {
-          name: data.name,
-          price:data.priceRange.value,
+          name: data.serviceModels[0].name,
+          price:data.serviceModels[0].price,
         }
       ]
-
-
-    }
+     }
 
     const json = JSON.stringify(obj)
     const blob = new Blob([json], {

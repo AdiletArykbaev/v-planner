@@ -12,7 +12,11 @@ import {loginAction} from "../../../Store/Actions/AuthAction"
 const VendorSignInForm = () => {
   const auth = useContext(AuthContext);
   const modal = useContext(ModalContext);
+  const { token } = useSelector((state) => state.vendorInfo);
+  const { vendorData } = useSelector((state) => state.vendorInfo);
   const dispatch = useDispatch();
+
+  console.log('VENDOR DATA', vendorData, token)
 
   const {
     register,
@@ -29,13 +33,26 @@ const VendorSignInForm = () => {
           password: data.password,
       };
     dispatch(loginAction(reqData));
-    auth.login(
-      data[f.email],
-      data[f.password],
-      process.env.REACT_APP_ROLE_VENDOR
-    );
+    
     modal.destroy();
   };
+
+  useEffect(() => {
+    if (vendorData.username.length > 1) {
+      auth.login(
+        vendorData.email,
+        vendorData.firstName,
+        vendorData.surname,
+        vendorData.phoneNumber,
+        vendorData.vendorModel.photos[0],
+        vendorData.phoneNumber,
+        token,
+        vendorData.vendorModel.companyName,
+        process.env.REACT_APP_ROLE_VENDOR
+      );
+    }
+    
+  }, [token])
 
   const isValidField = (field) => !errors[field];
   const getErrorField = (field) => errors[field]?.message;

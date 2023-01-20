@@ -23,6 +23,8 @@ const App = (props) => {
 
   const routes = Routes(auth.isAuth, auth.user?.role);
 
+  console.log(auth.isAuth)
+
   useEffect(() => {
     if (localStorage.getItem("token")) {
       auth.check();

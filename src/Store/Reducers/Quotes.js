@@ -1,29 +1,25 @@
 import {
-    GET_ALL_MESSAGES_FAILED, GET_ALL_MESSAGES_SUCCESS, GET_ALL_MESSAGES,
+    GET_ALL_QUOTES_FAILED, GET_ALL_QUOTES_SUCCESS, GET_ALL_QUOTES,
 } from "../types";
 
-const initialState = {
-    messages: null,
-    error: null,
-};
+const initialState = [];
 
-export default function chatReducer(state = initialState, action) {
+export default function quotesReducer(state = initialState, action) {
 
     switch (action.type) {
-        case GET_ALL_MESSAGES:
+        case GET_ALL_QUOTES:
             return {
                 ...state,
                 loading: true,
             };
-        case GET_ALL_MESSAGES_SUCCESS:
+        case GET_ALL_QUOTES_SUCCESS:
             return {
                 ...state,
                 loading: false,
                 error: null,
-                messages: action.payload?.data,
-
+                quotesList: action.payload?.data
             };
-        case GET_ALL_MESSAGES_FAILED:
+        case GET_ALL_QUOTES_FAILED:
             return {
                 ...state,
                 loading: false,

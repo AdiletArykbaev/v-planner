@@ -1,8 +1,8 @@
-export const QuoteAcceptButton = () => {
+export const QuoteBlueButton = ({title}) => {
     return (
         <button>
             <div className='form_buttons__item accept'>
-                Accept Quoto
+                {title}
             </div>
         </button>
     )

@@ -1,4 +1,4 @@
-import { useContext } from "react"
+import { useContext, useEffect, useState } from "react"
 import { Controller, useForm } from "react-hook-form"
 import Button from "../../UI/Button"
 import { FieldError } from "../../UI/FieldError"
@@ -6,25 +6,67 @@ import Select from "react-select"
 import { customReactSelectOptions } from "../../../utils/customReactSelectOptions"
 import f from "../../../validation/fieldName"
 import { ThemeContext } from "../../../context/ThemeContext"
+import Input from "../../UI/Input"
+import { yupResolver } from "@hookform/resolvers/yup"
+import { schemaVendorServiceDetails } from "../../../validation/schemas"
+import { ServiceForm } from "./VendorServiceForm"
 
-const VendorServiceDetailsForm = ({ onCallback, onBack }) => {
+
+const VendorServiceDetailsForm = ({ onCallback, onBack, onNext }) => {
 
   const {
+    // register,
     formState: { errors, isValid },
     handleSubmit,
-    control
+    control,
   } = useForm({
-    mode: "all"
-  })
+    mode: "all",
+    resolver: yupResolver(schemaVendorServiceDetails()),
+  });
 
   const theme = useContext(ThemeContext)
 
   const isValidField = field => !errors[field]
   const getErrorField = field => errors[field]?.message
 
+  const [serviceList, setServiceList] = useState([])
+
+  const setService = (service) => {
+    if(service) {
+        console.log(serviceList, service)
+      const data = [...serviceList]
+      const index = data.findIndex((s) => s.id === service.id)
+      if (!Number.isInteger(index)) {
+        console.log(index, data)
+        data[index].title = service.title
+      }else{
+        data.push(service)
+      }
+      console.log(data)
+      setServiceList(data)
+    } 
+  }
+
+  const [serviceInputs, setServiceInputs] = useState([
+    <ServiceForm id={0} services={serviceList} callback={setService} />
+  ])
+
+  console.log(serviceList)
+
+  const handle = (data) => {
+    data.services = serviceList
+    handleSubmit(onCallback(data))
+  }
+
   return (
-    <form onSubmit={handleSubmit(onCallback)}>
-      <label className="input-label">
+    <form onSubmit={handleSubmit((data) => {
+      data.serviceModels = serviceList.map(s => ({
+        name: s.title,
+        price: s.price
+      }))
+      onCallback(data)
+    })}>
+      {/* <label className="input-label">
         Service
         <Controller
           control={control}
@@ -45,7 +87,17 @@ const VendorServiceDetailsForm = ({ onCallback, onBack }) => {
           )}
         />
         { !isValidField(f.photo.types) && <FieldError text={getErrorField(f.photo.types)} />}
-      </label>
+      </label> */}
+
+      {serviceInputs.map((input, index) => <div key={index}>{input}</div>)}
+
+      {/* <Button
+        className="btn btn-light" onClick={() => setServiceInputs(prev => [
+          ...prev,
+          <ServiceForm id={serviceList.length} services={serviceList} callback={setService} />
+        ])}
+      >Add item</Button> */}
+      <br />
 
       <label className="input-label">
         Type of services
@@ -67,7 +119,7 @@ const VendorServiceDetailsForm = ({ onCallback, onBack }) => {
             />
           )}
         />
-        { !isValidField(f.photo.types_1) && <FieldError text={getErrorField(f.photo.types_1)} />}
+        {!isValidField(f.photo.types_1) && <FieldError text={getErrorField(f.photo.types_1)} />}
       </label>
 
       <label className="input-label">
@@ -79,8 +131,8 @@ const VendorServiceDetailsForm = ({ onCallback, onBack }) => {
             <Select
               placeholder="Photo & Video Styles"
               options={[
-                { value: "Artistic", label: "Artistic"},
-                { value: "Classic", label: "Classic"},
+                { value: "Artistic", label: "Artistic" },
+                { value: "Classic", label: "Classic" },
               ]}
               isClearable={false}
               isMulti
@@ -90,7 +142,7 @@ const VendorServiceDetailsForm = ({ onCallback, onBack }) => {
             />
           )}
         />
-        { !isValidField(f.photo.types_3) && <FieldError text={getErrorField(f.photo.types_3)} />}
+        {!isValidField(f.photo.types_3) && <FieldError text={getErrorField(f.photo.types_3)} />}
       </label>
 
       <label className="input-label">
@@ -102,11 +154,11 @@ const VendorServiceDetailsForm = ({ onCallback, onBack }) => {
             <Select
               placeholder="Starting Price Range"
               options={[
-                {value: "$0-$999", label: "$0-$999"},
-                {value: "$1,000-$1,999", label: "$1,000-$1,999"},
-                {value: "$2,000-$2,999", label: "$2,000-$2,999"},
-                {value: "$3,000-$4,999", label: "$3,000-$4,999"},
-                {value: "$5,000+", label: "$5,000+"}
+                { value: { priceFrom: 0, priceTo: 999 }, label: "$0-$999" },
+                { value: { priceFrom: 1000, priceTo: 1999 }, label: "$1,000-$1,999" },
+                { value: { priceFrom: 2000, priceTo: 2999 }, label: "$2,000-$2,999" },
+                { value: { priceFrom: 3000, priceTo: 4999 }, label: "$3,000-$4,999" },
+                { value: { priceFrom: 5000, priceTo: 100000 }, label: "$5,000+" }
               ]}
               isClearable={false}
               isSearchable={false}
@@ -115,7 +167,7 @@ const VendorServiceDetailsForm = ({ onCallback, onBack }) => {
             />
           )}
         />
-        { !isValidField(f.priceRange) && <FieldError text={getErrorField(f.priceRange)} />}
+        {!isValidField(f.priceRange) && <FieldError text={getErrorField(f.priceRange)} />}
       </label>
 
 
@@ -128,7 +180,7 @@ const VendorServiceDetailsForm = ({ onCallback, onBack }) => {
             <Select
               placeholder="Wedding Activities"
               options={[
-                {value: "Getting Engaged", label: "Getting Engaged"}
+                { value: "Getting Engaged", label: "Getting Engaged" }
               ]}
               isClearable={false}
               isSearchable={false}
@@ -137,7 +189,7 @@ const VendorServiceDetailsForm = ({ onCallback, onBack }) => {
             />
           )}
         />
-        { !isValidField(f.activities) && <FieldError text={getErrorField(f.activities)} />}
+        {!isValidField(f.activities) && <FieldError text={getErrorField(f.activities)} />}
       </label>
       <div className="input-row">
         <div
@@ -147,9 +199,11 @@ const VendorServiceDetailsForm = ({ onCallback, onBack }) => {
           <i className="icon-arrow-line"></i>
         </div>
         <Button
+          type="submit"
           className="btn btn-accent w-100 m-t-24"
           style={{ flex: 1 }}
           disabled={!isValid}
+          // onClick={onNext}
         >Next</Button>
       </div>
     </form>

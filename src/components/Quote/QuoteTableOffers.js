@@ -1,10 +1,12 @@
 import { useState } from "react"
+import { numberWithCommas } from "../../utils/numberWithCommas"
 import { QuoteCheckBox } from "./QuoteCheckBox"
 import { QuoteRadioButton } from "./QuoteRadioButton"
 
-export const QuoteTableOffers = ({ optional, offers }) => {
+export const QuoteTableOffers = ({ optional, offers, setTotal }) => {
     const [mainOfferActive, setMainOfferActive] = useState(1)
     const [checkBoxToggle, setCheckBoxToggle] = useState([])
+
     console.log(checkBoxToggle)
     return (
         <table className="grid-table">
@@ -28,9 +30,9 @@ export const QuoteTableOffers = ({ optional, offers }) => {
                 <tr key={offer.id} className="inside-light-line">
                     <td className="first">
                             {optional ?
-                                <QuoteCheckBox offerId={offer.id} offersActive={checkBoxToggle} setOffer={setCheckBoxToggle}/>
+                                <QuoteCheckBox offerId={offer.id} offerPrice={offer.unitPrice} offersActive={checkBoxToggle} setOffer={setCheckBoxToggle} setTotal={setTotal} />
                             :
-                                <QuoteRadioButton offerId={offer.id} offerActive={mainOfferActive} setOffer={setMainOfferActive}/>
+                                <QuoteRadioButton offerId={offer.id} offerPrice={offer.unitPrice} offerActive={mainOfferActive} setOffer={setMainOfferActive} setTotal={setTotal} />
                             }
                     </td>
                     <td className="grid-table__content second">
@@ -41,62 +43,13 @@ export const QuoteTableOffers = ({ optional, offers }) => {
                         {offer.qty}
                     </td>
                     <td className="fourth price">
-                        ${offer.unitPrice}
+                        ${numberWithCommas(offer.unitPrice)}
                     </td>
                     <td className="fifth price amount">
-                        ${offer.qty * offer.unitPrice}
+                        ${numberWithCommas(offer.qty * offer.unitPrice)}
                     </td>
                 </tr>
             )}
-            {/* <tr className="inside-light-line">
-                <td className="first">
-                    <button onClick={() => setMainOfferActive(1)}>
-                        {mainOfferActive === 1 ?
-                            <img src="./assets/images/icon/radio-active.svg" />
-                            :
-                            <img src="./assets/images/icon/radio-disabled.svg" />
-                        }
-                    </button>
-                </td>
-                <td className="grid-table__content second">
-                    <div className="grid-table__content-title">Brand Design (Logo, Colours & Typography)</div>
-                    <div className="grid-table__content-desc">Crafting a digital branding presence for developing the website and establishing a digital presence.</div>
-                </td>
-                <td className="third">
-                    1
-                </td>
-                <td className="fourth price">
-                    $25,000
-                </td>
-                <td className="fifth price amount">
-                    $25,000
-                </td>
-            </tr>
-            <tr>
-                <td className="first">
-                    <button onClick={() => setMainOfferActive(2)}>
-                        {mainOfferActive === 2 ?
-                            <img src="./assets/images/icon/radio-active.svg" />
-                            :
-                            <img src="./assets/images/icon/radio-disabled.svg" />
-                        }
-                    </button>
-
-                </td>
-                <td className="grid-table__content second">
-                    <div className="grid-table__content-title">Brand Design (Logo, Colours & Typography)</div>
-                    <div className="grid-table__content-desc">Crafting a digital branding presence for developing the website and establishing a digital presence.</div>
-                </td>
-                <td className="third">
-                    1
-                </td>
-                <td className="fourth price">
-                    $25,000
-                </td>
-                <td className="fifth price amount">
-                    $25,000
-                </td>
-            </tr> */}
         </table>
     )
 }

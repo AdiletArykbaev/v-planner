@@ -15,6 +15,7 @@ export const getCurrentUser = (jwt) =>{
             url: `${process.env.REACT_APP_API_URL}/user/current`,
             headers: { "Content-Type": "multipart/form-data",Authorization:`Bearer ${jwt}`},
         }).then((res) => {
+            console.log(res)
             console.log(res.data.result.roleModel.id)
             if(res.data.result.roleModel.id == 2){
                 dispatch(fetchSuccess(AUTH_USER_SUCCESS,res,jwt));

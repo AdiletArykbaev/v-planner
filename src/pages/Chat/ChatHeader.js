@@ -3,6 +3,7 @@ import useDevice from "../../hooks/useDevice"
 
 export default function ChatHeader({ user, children }) {
 
+  console.log("HEADER CHAT", user)
   const { isMobile, isLaptop } = useDevice()
   const navigate = useNavigate()
 
@@ -13,10 +14,10 @@ export default function ChatHeader({ user, children }) {
           (isMobile || isLaptop) && <div className="header-body-chat__back" onClick={() => navigate("/chat")}><i className="icon-arrow"></i></div>
         }
         <div className="header-body-chat__avatar">
-          <img src="/assets/images/vendor.png" alt="" />
+          <img src={user.avatar.url} alt="" />
         </div>
         <div className="header-body-chat__info">
-          <div className="header-body-chat__name">Vendor</div>
+          <div className="header-body-chat__name">{user.name}</div>
           { user.description && <div className="header-body-chat__text">{ user.description }</div> }
         </div>
       </div>

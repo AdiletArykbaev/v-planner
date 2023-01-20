@@ -38,7 +38,7 @@
     "node-sass": "^7.0.1"
   },
   "scripts": {
-    "start": "(set PORT=3001 || export PORT=3001) && react-scripts start",
+    "start": "(set PORT=3000 || export PORT=3000) && react-scripts start",
     "build": "react-scripts build",
     "serve": "serve -s build -p 3001"
   },

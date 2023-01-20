@@ -10,12 +10,9 @@ import {
 const initialState = {
   loading: false,
   vendorData: {
-    vendorModel:{
-      photos:[""],
-    },
-    username:"user"
+    username:""
   },
-  token: "твой токен",
+  token: null,
   error: null,
 };
 

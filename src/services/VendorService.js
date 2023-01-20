@@ -1,14 +1,30 @@
 export default class VendorService {
 
-  static async login(email, password) {
+  static async login(
+    email,
+    firstName,
+    lastName,
+    phone,
+    avatar,
+    token,
+    companyName,
+    nickname,
+    partnersFirstName,
+    partnersLastName,
+    engagementDate,
+    weddingDate,
+    location,
+    countGuest,
+    budget,
+  ) {
     const user = {
       role: process.env.REACT_APP_ROLE_VENDOR,
       profile: {
-        email: "main.profile.mail@gmail.com",
-        firstName: "Сергій",
-        lastName: "Засадинський",
-        phone: 380686899467,
-        avatar: "https://content.freelancehunt.com/profile/photo/225/CrazyTapok.png",
+        email: email,
+        firstName: firstName,
+        lastName: lastName,
+        phone: phone,
+        avatar: avatar,
         blocks: {
           personal: true,
           company: true,
@@ -20,7 +36,7 @@ export default class VendorService {
       },
       company: {
         logo: "https://s3-symbol-logo.tradingview.com/alphabet--600.png",
-        name: "Google",
+        name: companyName,
         type: "chocolate",
         amount: 100,
         state: "kiev",
@@ -67,7 +83,7 @@ export default class VendorService {
 
     return {
       data: {
-        accessToken: JSON.stringify(user),
+        accessToken: JSON.stringify(token),
         refreshToken: "refresh",
         user,
       }

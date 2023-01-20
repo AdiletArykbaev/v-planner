@@ -1,8 +1,8 @@
-export const QuoteDeclineButton = () => {
+export const QuoteLightButton = ({title, callback}) => {
     return (
-        <button>
+        <button onClick={callback}>
             <div className='form_buttons__item decline'>
-                Decline
+                {title}
             </div>
         </button>
     )

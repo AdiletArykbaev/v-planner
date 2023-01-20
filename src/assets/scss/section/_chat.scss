@@ -8,6 +8,11 @@
   }
 }
 
+.err-msg {
+  font-size: 24px;
+  text-align: center;
+}
+
 .sidebar-chat{
   padding: 24px 0;
   &__title{
@@ -45,6 +50,9 @@
     overflow: auto;
     margin-top: 5px;
   }
+  &__err {
+    text-align: center;
+  }
   &__item{
     display: flex;
     position: relative;
@@ -79,6 +87,9 @@
     }
   }
   &__name{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     font-weight: 600;
     margin-bottom: 8px;
     letter-spacing: 0.005rem;

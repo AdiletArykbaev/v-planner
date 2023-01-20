@@ -8,14 +8,16 @@ import chatReducer from "./Reducers/Chat";
 import { composeWithDevTools } from 'redux-devtools-extension';
 
 import thunk from "redux-thunk";
+import quotesReducer from "./Reducers/Quotes";
 
 const reducers = combineReducers({
   userInfo: userReducer,
   vendorInfo: VendorReducer,
   matchList: matchListReducer,
-  myVendors:LikedVendors,
+  myVendors: LikedVendors,
   vendorMore:DetailVendor,
-  chat:chatReducer
+  chat:chatReducer,
+  quotes: quotesReducer
 });
 const reduxDevTools = composeWithDevTools(
     applyMiddleware(thunk)
