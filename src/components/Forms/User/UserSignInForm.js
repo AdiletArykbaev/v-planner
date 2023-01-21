@@ -15,6 +15,9 @@ const UserSignInForm = () => {
   const { userData } = useSelector((state) => state.userInfo);
   const { token } = useSelector((state) => state.userInfo);
   const dispatch = useDispatch();
+
+  console.log('USER DATA', userData, token)
+
   const {
     register,
     formState: { errors, isValid },

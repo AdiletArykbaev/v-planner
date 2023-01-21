@@ -1,9 +1,25 @@
 import React, { Fragment, useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import Button from "../../components/UI/Button"
 import useDevice from "../../hooks/useDevice"
+import { getQuotes } from "../../Store/Actions/getAllQuotes"
 
 export default function UserQuotes() {
+
+  const dispatch = useDispatch()
+
+  const token = useSelector(state => state.userInfo.token)
+
+  useEffect(() => {
+    if(token) dispatch(getQuotes(token))
+  }, [])
+
+  const quoteList = useSelector(state => state.quotes.quotesList)
+
+  console.log('USER QUOTES', quoteList)
+
+  // const filteredQuotes = quoteList.map(q => )
 
   const [quotes, setQuotes] = useState([
     {
@@ -71,7 +87,7 @@ export default function UserQuotes() {
   }
 
   const toggleOpen = id => {
-    setQuotes(quotes.map(quote => quote.id === id ? {...quote, open: !quote.open} : quote ))
+    setQuotes(quoteList.map(quote => quote.id === id ? {...quote, open: !quote.open} : quote ))
   }
 
   useEffect(() => {
@@ -122,7 +138,7 @@ export default function UserQuotes() {
             <div className="table__header cell-chat"></div>
           </div>
           {
-            quotes.map(quote => (
+            quoteList.map(quote => (
               <Fragment  key={quote.id}>
                 <div className={ quote.open ? "table__row active" : "table__row" }>
                   <div className="table__cell cell-arrow">
@@ -144,16 +160,16 @@ export default function UserQuotes() {
                   <div className="table__cell cell-company">
                     <div className="cell-company__content">
                       <div className="cell-company__img">
-                        <img src={quote.company.avatar} alt={quote.company.name} />
+                        <img src={quote.vendor.photos[0].url} alt={quote.vendor.companyName} />
                       </div>
                       <div className="cell-company__info">
-                        <div className="cell-company__name">{ quote.company.name }</div>
-                        <div className="cell-company__type">{ quote.company.type }</div>
+                        <div className="cell-company__name">{ quote.vendor.companyName }</div>
+                        <div className="cell-company__type">{ quote.vendor.companyName }</div>
                       </div>
                     </div>
                   </div>
                   <div className="table__cell cell-service">
-                    <div className="cell-service__content">{ quote.services.length } Services</div>
+                    <div className="cell-service__content">{ quote.vendor.services.length } Services</div>
                   </div>
                   <div className="table__cell cell-date">
                     <div className="cell-date__content">

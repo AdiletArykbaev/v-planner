@@ -34,6 +34,9 @@ const fieldName = {
     company: "aboutCompany",
     team: "aboutTeam",
   },
+  services: [
+    {title: 'serviceTitle', description: 'serviceDecription'}
+  ],
   social: {
     facebook: "facebook",
     instagram: "instagram",

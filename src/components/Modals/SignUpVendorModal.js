@@ -32,11 +32,16 @@ const SignUpVendorModal = () => {
   const signInVendor = () => modal.setContent(<SignInVendorModal />);
   const signUpUser = () => modal.setContent(<SignUpUserModal />);
 
+  console.log(step3)
+
   const nextStep = (number) => {
     step.nextStep(number);
   };
 
+  const { token } = useSelector((state) => state.vendorInfo);
+
   const signIn = (data) => {
+    console.log('SIGNIN DATA', data)
     const req = {
       ...step1,
       ...step2,
@@ -48,8 +53,11 @@ const SignUpVendorModal = () => {
     };
     dispatch(signUpAction(req));
     auth.login(data.email, data.password, process.env.REACT_APP_ROLE_VENDOR);
+    
     modal.destroy();
   };
+
+  console.log(step1)
 
   const titleList = [
     "Personal Information",
@@ -105,9 +113,11 @@ const SignUpVendorModal = () => {
             <StepTab stepNumber={2} currentStep={step.currentStep}>
               <VendorServiceDetailsForm
                 onCallback={(data) => {
+                  console.log("data in step 3", data);
                   setStep3(data);
                   nextStep(3);
                 }}
+                onNext={() => nextStep(3)}
                 onBack={() => nextStep(1)}
               />
             </StepTab>

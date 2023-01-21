@@ -1,9 +1,22 @@
-import React, { Fragment, useState } from "react"
+import React, { Fragment, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import Button from "../../components/UI/Button"
 import useDevice from "../../hooks/useDevice"
+import { getQuotes } from "../../Store/Actions/getAllQuotes"
+import { connect, useSelector } from "react-redux";
 
-export default function VendorQuotes() {
+function VendorQuotes({getQuotes, quotesList}) {
+
+  const token = useSelector(state => state.userInfo.token)
+
+  useEffect(() => {
+    if(token) getQuotes(token)
+  }, [])
+
+
+  console.log(quotesList)
+
+  const [quotes, setQuotes] = useState()
 
   const [orders, setOrders] = useState([
     {
@@ -182,3 +195,19 @@ export default function VendorQuotes() {
     </section>
   )
 }
+
+const mapStateToProps = function (state) {
+  return {
+    quotesList: state.quotes.quotesList,
+    token:state.userInfo.token,
+    loading:state.quotes.loading,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return{
+    getQuotes: () => dispatch(getQuotes())
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(VendorQuotes);

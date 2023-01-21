@@ -3,6 +3,8 @@ import { AuthContext } from "../../context/AuthContext"
 
 export default function ChatHistory({ messages, user }) {
 
+  console.log("USERS",user)
+
   const auth = useContext(AuthContext)
 
   const serviceMessage = ({ id, message }) => {

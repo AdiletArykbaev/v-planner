@@ -7,7 +7,7 @@ export const getMessages = () => {
         const {userInfo} = getState()
         axios({
             method: "get",
-            url: `${process.env.REACT_APP_API_URL}/chat-rooms/${userInfo.userData.id}`,
+            url: `${process.env.REACT_APP_API_URL}/chat-rooms/${userInfo.userData.clientModel.id}`,
             headers: { "Content-Type": "multipart/form-data",Authorization:`Bearer ${userInfo.token}`},
         }).then((res) => {
             dispatch(getMessagesSuccess(res));

@@ -124,7 +124,7 @@ const UserSignUpForm = () => {
   const getErrorField = (field) => errors[field]?.message;
   useEffect(() => {
 
-    if (token.length > 10) {
+    if (token !== null) {
       console.log("token in useEffect", token);
       console.log("userData in test", userData);
       auth.login(

@@ -12,7 +12,7 @@ const initialState = {
   userData: {
     surname:""
   },
-  token: "твой токен",
+  token: null,
   error: null,
 };
 

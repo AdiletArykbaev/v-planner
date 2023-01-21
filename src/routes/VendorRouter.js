@@ -14,9 +14,10 @@ import VendorQuotes from "../pages/Quotes/VendorQuotes";
 import Reports from "../pages/Reports";
 import Rules from "../pages/Rules";
 import VendorChat from "../pages/Chat/VendorChat";
-import VendorQuote from "../pages/Quote/VendorQuote";
+import Quote from "../pages/Quote/Quote";
 import f from "../validation/fieldName";
 import {connect} from "react-redux";
+import QuoteForm from "../pages/QuoteForm/QuoteForm";
 
 
  function VendorRouter({vendorData}) {
@@ -24,6 +25,8 @@ import {connect} from "react-redux";
      // console.log("photos",vendorData.vendorModel.photos[0].name)
     //vendorData.vendorModel.photos[0].name
      console.log("vendor Data",vendorData)
+
+     const url = vendorData.vendorModel?.photoModel?.name
   return (
     <Routes>
       <Route
@@ -31,7 +34,7 @@ import {connect} from "react-redux";
         element={
           <CabinetLayout
             name={vendorData.firstName}
-            image={vendorData.vendorModel.photos[0].name}
+            image={url}
           />
         }
       >
@@ -47,10 +50,11 @@ import {connect} from "react-redux";
           <Route path="/history" element={<VendorHistory />} />
           <Route path="/reports" element={<Reports />} />
           <Route path="/chat" element={<VendorChat />} />
+          <Route path="/quote-form" element={<QuoteForm />} />
           <Route path="/chat/:id" element={<VendorChat />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Route>
-        <Route path="/quote" element={<VendorQuote />} />
+        <Route path="/quote" element={<Quote />} />
         <Route path="/account" element={<AccountPageLayout />}>
           <Route path="/account" element={<VendorAccount />} />
           <Route path="/account/:id" element={<VendorAccount />} />
@@ -66,4 +70,6 @@ const mapStateToProps = function (state) {
 
   };
 };
+
+
 export default  connect(mapStateToProps)(VendorRouter);
