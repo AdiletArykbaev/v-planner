@@ -10,7 +10,7 @@ export const signUpAction = (data) => {
     dispatch(LoginStart);
     const reqBody = new FormData();
     const obj = {
-      firstName:  data.name,
+      firstName:  data.firstName,
       surname:  data.lastName,
       phoneNumber: data.phone,
       username: data.name,

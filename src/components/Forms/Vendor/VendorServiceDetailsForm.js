@@ -15,7 +15,7 @@ import { ServiceForm } from "./VendorServiceForm"
 const VendorServiceDetailsForm = ({ onCallback, onBack, onNext }) => {
 
   const {
-    // register,
+    register,
     formState: { errors, isValid },
     handleSubmit,
     control,
@@ -29,74 +29,45 @@ const VendorServiceDetailsForm = ({ onCallback, onBack, onNext }) => {
   const isValidField = field => !errors[field]
   const getErrorField = field => errors[field]?.message
 
-  const [serviceList, setServiceList] = useState([])
-
   const setService = (service) => {
     if(service) {
-        console.log(serviceList, service)
-      const data = [...serviceList]
+        console.log(serviceInputsData, service)
+      const data = [...serviceInputsData]
       const index = data.findIndex((s) => s.id === service.id)
-      if (!Number.isInteger(index)) {
+      if (index !== -1) {
         console.log(index, data)
         data[index].title = service.title
       }else{
         data.push(service)
       }
       console.log(data)
-      setServiceList(data)
+      setServiceInputsData(data)
     } 
   }
 
-  const [serviceInputs, setServiceInputs] = useState([
-    <ServiceForm id={0} services={serviceList} callback={setService} />
+  const [serviceInputsData, setServiceInputsData] = useState([
+    {id: 0, title: '', price: 0}
   ])
 
-  console.log(serviceList)
-
-  const handle = (data) => {
-    data.services = serviceList
-    handleSubmit(onCallback(data))
-  }
+  console.log(serviceInputsData)
 
   return (
     <form onSubmit={handleSubmit((data) => {
-      data.serviceModels = serviceList.map(s => ({
+      data.serviceModels = serviceInputsData.map(s => ({
         name: s.title,
         price: s.price
       }))
       onCallback(data)
     })}>
-      {/* <label className="input-label">
-        Service
-        <Controller
-          control={control}
-          name={f.photo.types}
-          render={({ field }) => (
-            <Select
-              closeMenuOnSelect={false}
-              placeholder="Service"
-              options={[
-                { value: 'Day After Session', label: 'Day After Session' },
-                { value: 'Engagement', label: 'Engagement' }
-              ]}
-              isClearable={false}
-              isMulti
-              {...field}
-              {...customReactSelectOptions(theme.get())}
-            />
-          )}
-        />
-        { !isValidField(f.photo.types) && <FieldError text={getErrorField(f.photo.types)} />}
-      </label> */}
 
-      {serviceInputs.map((input, index) => <div key={index}>{input}</div>)}
+      {serviceInputsData.map((input) => <ServiceForm key={input.id} id={input.id} services={serviceInputsData} title={input.title} callback={setService} />)}
 
-      {/* <Button
-        className="btn btn-light" onClick={() => setServiceInputs(prev => [
+      <div
+        className="btn btn-light" onClick={() => setServiceInputsData(prev => [
           ...prev,
-          <ServiceForm id={serviceList.length} services={serviceList} callback={setService} />
+          {id: serviceInputsData.length, title: '', price: 0}
         ])}
-      >Add item</Button> */}
+      >Add item</div>
       <br />
 
       <label className="input-label">
