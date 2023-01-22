@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { ModalContext } from "../../context/ModalContext";
 import useStep from "../../hooks/useStep";
@@ -38,10 +38,9 @@ const SignUpVendorModal = () => {
     step.nextStep(number);
   };
 
-  const { token } = useSelector((state) => state.vendorInfo);
-
+  const vendorData = useSelector((state) => state.vendorInfo.vendorData);
+  
   const signIn = (data) => {
-    console.log('SIGNIN DATA', data)
     const req = {
       ...step1,
       ...step2,
@@ -51,13 +50,19 @@ const SignUpVendorModal = () => {
       ...step6,
       ...data,
     };
+    console.log('SIGNIN DATA', req)
     dispatch(signUpAction(req));
-    auth.login(data.email, data.password, process.env.REACT_APP_ROLE_VENDOR);
     
     modal.destroy();
   };
 
-  console.log(step1)
+  console.log(step3)
+
+  useEffect(() => {
+    if (vendorData.id) {
+      auth.login(vendorData.email, vendorData.password, process.env.REACT_APP_ROLE_VENDOR);
+    }
+  }, [vendorData])
 
   const titleList = [
     "Personal Information",

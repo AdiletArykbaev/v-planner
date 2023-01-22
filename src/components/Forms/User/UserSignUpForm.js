@@ -104,19 +104,10 @@ const UserSignUpForm = () => {
       ? watch(f.customBudget) && isValid
       : watch(f.budget) && isValid;
 
+  useEffect
+
   const onSubmit = (data) => {
     dispatch(signUpAction({ ...data }));
-    auth.login(
-      process.env.REACT_APP_ROLE_USER,
-      userData.email,
-      userData.firstName,
-      userData.surname,
-
-      "avata  r",
-      userData.phone,
-      userData.nickname,
-      userData.partnersFirstName
-    );
     modal.destroy();
   };
 

@@ -5,7 +5,7 @@ import { schemaVendorServiceDetails } from "../../../validation/schemas"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 
-export const ServiceForm = ({callback, id, services}) => {
+export const ServiceForm = ({callback, id}) => {
     const {
     //   register,
       formState: { errors, isValid },
@@ -18,6 +18,8 @@ export const ServiceForm = ({callback, id, services}) => {
     const isValidField = field => !errors[field]
     const getErrorField = field => errors[field]?.message
   
+    console.log("ID", id)
+
     const [inputData, setInputData] = useState(null)
 
     return (
